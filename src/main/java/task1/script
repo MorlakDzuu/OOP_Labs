@@ -1,0 +1,35 @@
+#!/bin/bash
+java CopyFile input.txt output.txt > result.txt
+if cmp -s result.txt result1.txt ; then
+ echo test 1 passed
+else 
+ echo test 1 failed
+fi 
+
+java CopyFile > result.txt
+if cmp -s result.txt result2.txt ; then
+ echo test 2 passed
+else 
+ Echo test 2 failed
+fi 
+
+java CopyFile input.txt > result.txt
+if cmp -s result.txt result2.txt ; then
+ echo test 3 passed
+else 
+ Echo test 3 failed
+fi 
+
+java CopyFile none.txt output.txt > result.txt
+if cmp -s result.txt result3.txt ; then
+ echo test 4 passed
+else 
+ echo test 4 failed
+fi 
+
+java CopyFile input.txt none.txt > result.txt
+if cmp -s result.txt result4.txt ; then
+ echo test 5 passed
+else 
+ echo test 5 failed
+fi 
