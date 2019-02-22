@@ -37,6 +37,6 @@ public class Dec2bin {
             return;
         }
         System.out.println(dec2Bin(number));
-        System.exit(2);
+        System.exit(0);
     }
 }
