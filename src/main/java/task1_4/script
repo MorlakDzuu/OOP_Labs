@@ -1,0 +1,40 @@
+#!/bin/bash
+if (java Replace input1.txt output.txt 123 man;) && (cmp -s output.txt result1.txt;) then
+ echo test 1 passed
+else 
+ echo test 1 exit code $?
+fi 
+
+if (java Replace input2.txt output.txt job slave;) && cmp -s output.txt result2.txt; then
+ echo test 2 passed
+else 
+ echo test 2 exit code $?
+fi 
+
+java Replace input3.txt output.txt 1231234 clever
+if cmp -s output.txt result3.txt; then
+ echo test 3 passed
+else 
+ echo test 3 exit code $?
+fi
+
+java Replace none.txt output.txt 1231234 clever > output.txt
+if cmp -s output.txt result4.txt; then
+ echo test 4 passed
+else
+ echo test 4 exit code $?
+fi
+
+java Replace input3.txt none.txt 1231234 clever > output.txt
+if cmp -s output.txt result5.txt; then
+ echo test 5 passed
+else
+ echo test 5 exit code $?
+fi
+
+java Replace input3.txt none.txt > output.txt
+if cmp -s output.txt result6.txt; then
+ echo test 6 passed
+else
+ echo test 6 exit code $?
+fi
