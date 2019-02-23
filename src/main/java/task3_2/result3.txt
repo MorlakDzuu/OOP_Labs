@@ -1,0 +1,1 @@
+Determinant equals 0, invert matrix does not exist
