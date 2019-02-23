@@ -30,7 +30,7 @@ public class Invert {
                     }
                 }
                 if (scanner.hasNextFloat()) {
-                    System.out.println("Your matrix has mistakes");
+                    System.out.println("Your matrix should have order 3");
                     return null;
                 }
             }

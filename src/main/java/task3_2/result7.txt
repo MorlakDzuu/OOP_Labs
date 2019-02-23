@@ -1,1 +1,1 @@
-Your matrix should has order 3
+Your matrix should have order 3
