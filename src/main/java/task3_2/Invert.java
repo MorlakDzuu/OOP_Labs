@@ -46,37 +46,6 @@ public class Invert {
         }
     }
 
-    public static int getMatrixOrder(File matrixFile) {
-        int lineCounter = 0;
-        int elemCounter;
-        int counter = 0;
-        try (FileReader reader = new FileReader(matrixFile)) {
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            while (bufferedReader.ready()) {
-                elemCounter = 0;
-                Scanner scanner = new Scanner(bufferedReader.readLine());
-                while (scanner.hasNextFloat()) {
-                    scanner.nextFloat();
-                    ++elemCounter;
-                }
-                if (counter == 0) {
-                    counter = elemCounter;
-                } else if (counter != elemCounter) {
-                    System.out.println("Your matrix has mistakes");
-                    System.exit(1);
-                }
-                ++lineCounter;
-            }
-            if (counter != lineCounter) {
-                System.out.println("Your matrix has mistakes");
-                System.exit(1);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lineCounter;
-    }
-
     public static float getDeterminant(float[][] matrix) {
         float determinant = 0;
         for (int i = 0; i < 3; i++) {
