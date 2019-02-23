@@ -32,7 +32,7 @@ else
  echo test 5 exit code $?
 fi
 
-java Replace input3.txt none.txt > output.txt
+java Replace input3.txt > output.txt
 if cmp -s output.txt result6.txt; then
  echo test 6 passed
 else

@@ -1,0 +1,1 @@
+Usage: java Dec2bin <decimal number>

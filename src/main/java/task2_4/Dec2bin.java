@@ -1,5 +1,3 @@
-package task2;
-
 public class Dec2bin {
 
     public static String dec2Bin(long number) {
@@ -21,7 +19,6 @@ public class Dec2bin {
         if (args.length != 1) {
             System.out.println("Usage: java Dec2bin <decimal number>");
             System.exit(1);
-            return;
         }
         long number;
         try {
@@ -29,14 +26,12 @@ public class Dec2bin {
             if (number < 0) {
                 System.out.println("Your number is negative");
                 System.exit(1);
-                return;
             }
+            System.out.println(dec2Bin(number));
         } catch (NumberFormatException e) {
             System.out.println("Input is not a number");
             System.exit(1);
-            return;
         }
-        System.out.println(dec2Bin(number));
         System.exit(0);
     }
 }
