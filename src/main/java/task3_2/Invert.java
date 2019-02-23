@@ -3,32 +3,47 @@ import java.util.Scanner;
 
 public class Invert {
 
-    public static float[][] copyMatrixToArray(File matrixFile) {
+    public static float[][] copyMatrixToArray(String rootPath) {
+        File matrixFile = new File(System.getProperty("user.dir"), rootPath);
+        if (!matrixFile.exists()) {
+            System.out.println("Input file does not exists");
+            return null;
+        }
         try (FileReader reader = new FileReader(matrixFile)) {
-            int order = getMatrixOrder(matrixFile);
-            if (order != 3) {
-                System.out.println("Your matrix should has order 3");
-                System.exit(1);
-            }
+            int order = 3;
             BufferedReader bufferedReader = new BufferedReader(reader);
             float[][] matrix = new float[order][order];
-            for (int i = 0; i < order; ++i) {
-                Scanner scanner = new Scanner(bufferedReader.readLine());
-                for (int j = 0; j < order; ++j) {
-                    matrix[i][j] = scanner.nextFloat();
+            for (int i = 0; i < order; i++) {
+                Scanner scanner;
+                if (bufferedReader.ready()) {
+                    scanner = new Scanner(bufferedReader.readLine());
+                } else {
+                    System.out.println("Your matrix should have order 3");
+                    return null;
+                }
+                for (int j = 0; j < order; j++) {
+                    if (scanner.hasNextFloat()) {
+                        matrix[i][j] = scanner.nextFloat();
+                    } else {
+                        System.out.println("Your matrix has mistakes");
+                        return null;
+                    }
+                }
+                if (scanner.hasNextFloat()) {
+                    System.out.println("Your matrix has mistakes");
+                    return null;
                 }
             }
             return matrix;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("FileNotFoundException");
-            System.exit(1);
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IOException");
-            System.exit(1);
+            return null;
         }
-        return null;
     }
 
     public static int getMatrixOrder(File matrixFile) {
@@ -86,17 +101,13 @@ public class Invert {
         return minor;
     }
 
-    public static float[][] getExtraMatrix(float[][] matrix) {
+    public static float[][] getAdditionMatrix(float[][] matrix) {
         float[][] extraMatrix = new float[3][3];
         int k = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 extraMatrix[j][i] = getMinor(matrix, i, j)*k;
-                if (k == 1) {
-                    k = -1;
-                } else {
-                    k = 1;
-                }
+                k = -k;
             }
         }
         return extraMatrix;
@@ -104,8 +115,12 @@ public class Invert {
 
     public static float[][] invertMatrix(float[][] matrix) {
         float[][] invertMatrix = new float[3][3];
-        float[][] extraMatrix = getExtraMatrix(matrix);
+        float[][] extraMatrix = getAdditionMatrix(matrix);
         float det = getDeterminant(matrix);
+        if (det == 0) {
+            System.out.println("Determinant equals 0, invert matrix does not exist");
+            return null;
+        }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 invertMatrix[i][j] = extraMatrix[i][j]/det;
@@ -128,17 +143,14 @@ public class Invert {
             System.out.println("Usage: Invert <matrix file>");
             System.exit(1);
         }
-        File matrixFile = new File(System.getProperty("user.dir"), args[0]);
-        if (!matrixFile.exists()) {
-            System.out.println("Input file does not exists");
+        float[][] matrix = copyMatrixToArray(args[0]);
+        if (matrix == null) {
             System.exit(1);
         }
-        float[][] matrix = copyMatrixToArray(matrixFile);
-        if (getDeterminant(matrix) == 0) {
-            System.out.println("Determinant equals 0, invert matrix does not exist");
+        float[][] invertMatrix = invertMatrix(matrix);
+        if (invertMatrix == null) {
             System.exit(0);
         }
-        float[][] invertMatrix = invertMatrix(matrix);
         printMatrix(invertMatrix);
         System.exit(0);
     }
