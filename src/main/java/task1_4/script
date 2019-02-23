@@ -1,11 +1,13 @@
 #!/bin/bash
-if (java Replace input1.txt output.txt 123 man;) && (cmp -s output.txt result1.txt;) then
+java Replace input1.txt output.txt 123 man
+if cmp -s output.txt result1.txt; then
  echo test 1 passed
 else 
  echo test 1 exit code $?
 fi 
 
-if (java Replace input2.txt output.txt job slave;) && cmp -s output.txt result2.txt; then
+java Replace input2.txt output.txt job slave
+if cmp -s output.txt result2.txt; then
  echo test 2 passed
 else 
  echo test 2 exit code $?
