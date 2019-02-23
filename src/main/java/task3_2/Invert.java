@@ -35,7 +35,7 @@ public class Invert {
         int lineCounter = 0;
         int elemCounter;
         int counter = 0;
-        try (FileReader reader = new FileReader(matrixFile)){
+        try (FileReader reader = new FileReader(matrixFile)) {
             BufferedReader bufferedReader = new BufferedReader(reader);
             while (bufferedReader.ready()) {
                 elemCounter = 0;
@@ -64,7 +64,7 @@ public class Invert {
 
     public static float getDeterminant(float[][] matrix) {
         float determinant = 0;
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 3; i++) {
             determinant = -(matrix[0][i]*getMinor(matrix, 0, i) + determinant);
         }
         return -determinant;
