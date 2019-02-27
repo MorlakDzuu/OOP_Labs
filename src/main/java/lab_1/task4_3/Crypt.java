@@ -28,9 +28,20 @@ public class Crypt {
         return binaryArray;
     }
 
-    public static void crypt(String inputFileName, String outputFileName, int key) {
-        File inputFile = new File(System.getProperty("user.dir"), inputFileName);
-        File outputFile = new File(System.getProperty("user.dir"), outputFileName);
+    public static File initFile(String path) {
+        File file = new File(System.getProperty("user.dir"), path);
+        if (file.exists()) {
+            return file;
+        }
+        return null;
+    }
+
+    public static boolean crypt(String inputFileName, String outputFileName, int key) {
+        File inputFile = initFile(inputFileName);
+        File outputFile = initFile(outputFileName);
+        if (inputFile == null || outputFile == null) {
+            return false;
+        }
         try (FileInputStream reader = new FileInputStream(inputFile);
              FileOutputStream writer = new FileOutputStream(outputFile)) {
             int elem;
@@ -45,15 +56,19 @@ public class Crypt {
                 elem = Integer.parseInt(String.valueOf(binaryArray), 2);
                 writer.write(elem);
             }
+            return true;
         } catch (IOException e) {
-            System.exit(1);
             e.printStackTrace();
+            return false;
         }
     }
 
-    public static void decrypt(String inputFileName, String outputFileName, int key) {
-        File inputFile = new File(System.getProperty("user.dir"), inputFileName);
-        File outputFile = new File(System.getProperty("user.dir"), outputFileName);
+    public static boolean decrypt(String inputFileName, String outputFileName, int key) {
+        File inputFile = initFile(inputFileName);
+        File outputFile = initFile(outputFileName);
+        if (inputFile == null || outputFile == null) {
+            return false;
+        }
         try (FileInputStream reader = new FileInputStream(inputFile);
              FileOutputStream writer = new FileOutputStream(outputFile)) {
             int elem;
@@ -68,9 +83,10 @@ public class Crypt {
                 elem = elem ^ key;
                 writer.write(elem);
             }
+            return true;
         } catch (IOException e) {
-            System.exit(1);
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -88,10 +104,15 @@ public class Crypt {
              System.exit(1);
         }
         if (status.equals("crypt")) {
-            crypt(inputFileName, outputFileName, key);
+            if (!crypt(inputFileName, outputFileName, key)) {
+                System.exit(1);
+            }
         }
         if (status.equals("decrypt")) {
-            decrypt(inputFileName, outputFileName, key);
+            if (!decrypt(inputFileName, outputFileName, key)) {
+                System.exit(1);
+            }
         }
+        System.exit(0);
     }
 }
