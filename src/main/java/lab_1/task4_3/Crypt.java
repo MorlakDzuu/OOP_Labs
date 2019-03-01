@@ -39,7 +39,12 @@ public class Crypt {
     public static boolean crypt(String inputFileName, String outputFileName, int key) {
         File inputFile = initFile(inputFileName);
         File outputFile = initFile(outputFileName);
-        if (inputFile == null || outputFile == null) {
+        if (inputFile == null) {
+            System.out.println("Input file does not exist");
+            return false;
+        }
+        if (outputFile == null) {
+            System.out.println("Output file does not exist");
             return false;
         }
         try (FileInputStream reader = new FileInputStream(inputFile);
@@ -59,6 +64,7 @@ public class Crypt {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("IOException");
             return false;
         }
     }
@@ -66,7 +72,12 @@ public class Crypt {
     public static boolean decrypt(String inputFileName, String outputFileName, int key) {
         File inputFile = initFile(inputFileName);
         File outputFile = initFile(outputFileName);
-        if (inputFile == null || outputFile == null) {
+        if (inputFile == null) {
+            System.out.println("Input file does not exist");
+            return false;
+        }
+        if (outputFile == null) {
+            System.out.println("Output file does not exist");
             return false;
         }
         try (FileInputStream reader = new FileInputStream(inputFile);
@@ -86,6 +97,7 @@ public class Crypt {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("IOException");
             return false;
         }
     }
@@ -98,7 +110,13 @@ public class Crypt {
         String status = args[0];
         String inputFileName = args[1];
         String outputFileName = args[2];
-        int key = Integer.parseInt(args[3]);
+        int key = -1;
+        try {
+            key = Integer.parseInt(args[3]);
+        } catch (NumberFormatException e) {
+            System.out.println("Your key should be a number from 0 to 255");
+            System.exit(1);
+        }
         if (key < 0 || key > 255) {
              System.out.println("Your key should be in range from 0 to 255");
              System.exit(1);
