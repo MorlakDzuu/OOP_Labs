@@ -15,14 +15,15 @@ public class Replace {
         writer.flush();
     }
 
-    public static void copyFileWithTextReplacement(File inputFile, File outputFile, String searchString, String replacementString) {
+    public static boolean copyFileWithTextReplacement(File inputFile, File outputFile, String searchString, String replacementString) {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-                FileWriter writer = new FileWriter(outputFile)) {
+             FileWriter writer = new FileWriter(outputFile)) {
             copyStreamWithTextReplacement(writer, reader, searchString, replacementString);
+            return true;
         } catch (IOException e) {
-            System.out.println("IOException");
             e.printStackTrace();
-            System.exit(1);
+            System.out.println("IOException");
+            return false;
         }
     }
 
@@ -43,7 +44,9 @@ public class Replace {
         }
         String search = args[2];
         String replacement = args[3];
-        copyFileWithTextReplacement(inputFile, outputFile, search, replacement);
+        if (!copyFileWithTextReplacement(inputFile, outputFile, search, replacement)) {
+            System.exit(1);
+        }
         System.exit(0);
     }
 }
