@@ -28,70 +28,44 @@ public class Crypt {
         return binaryArray;
     }
 
-    public static File initFile(String path) {
-        File file = new File(System.getProperty("user.dir"), path);
-        if (file.exists()) {
-            return file;
-        }
-        return null;
-    }
-
-    public static boolean crypt(String inputFileName, String outputFileName, int key) {
-        File inputFile = initFile(inputFileName);
-        File outputFile = initFile(outputFileName);
+    public static boolean transformFile(CryptElement cryptElement) {
+        File inputFile = cryptElement.getInputFile();
         if (inputFile == null) {
             System.out.println("Input file does not exist");
             return false;
         }
-        if (outputFile == null) {
-            System.out.println("Output file does not exist");
+        File outputFile = cryptElement.getOutputFile();
+        String state = cryptElement.getState();
+        if (!(state.equals("crypt") || state.equals("decrypt"))) {
+            System.out.println("Invalid state: <crypt/decrypt>");
+            return false;
+        }
+        Integer key = cryptElement.getIntKey();
+        if (key == null || (key < 0) || (key > 255)) {
+            System.out.println("Your key should be a number from 0 to 255");
             return false;
         }
         try (FileInputStream reader = new FileInputStream(inputFile);
              FileOutputStream writer = new FileOutputStream(outputFile)) {
             int elem;
             while ((elem = reader.read()) != -1) {
-                elem = elem ^ key;
+                if (cryptElement.getState().equals("crypt")) {
+                    elem = elem ^ key;
+                }
                 String binaryString = Integer.toBinaryString(elem);
                 while (binaryString.length() != 8) {
                     binaryString = '0' + binaryString;
                 }
                 char[] binaryArray = binaryString.toCharArray();
-                binaryArray = binaryReplacementCrypt(binaryArray);
-                elem = Integer.parseInt(String.valueOf(binaryArray), 2);
-                writer.write(elem);
-            }
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IOException");
-            return false;
-        }
-    }
-
-    public static boolean decrypt(String inputFileName, String outputFileName, int key) {
-        File inputFile = initFile(inputFileName);
-        File outputFile = initFile(outputFileName);
-        if (inputFile == null) {
-            System.out.println("Input file does not exist");
-            return false;
-        }
-        if (outputFile == null) {
-            System.out.println("Output file does not exist");
-            return false;
-        }
-        try (FileInputStream reader = new FileInputStream(inputFile);
-             FileOutputStream writer = new FileOutputStream(outputFile)) {
-            int elem;
-            while ((elem = reader.read()) != -1) {
-                String binaryString = Integer.toBinaryString(elem);
-                while (binaryString.length() != 8) {
-                    binaryString = '0' + binaryString;
+                if (state.equals("crypt")) {
+                    binaryArray = binaryReplacementCrypt(binaryArray);
+                } else {
+                    binaryArray = binaryReplacementDecrypt(binaryArray);
                 }
-                char[] binaryArray = binaryString.toCharArray();
-                binaryArray = binaryReplacementDecrypt(binaryArray);
                 elem = Integer.parseInt(String.valueOf(binaryArray), 2);
-                elem = elem ^ key;
+                if (cryptElement.getState().equals("decrypt")) {
+                    elem = elem ^ key;
+                }
                 writer.write(elem);
             }
             return true;
@@ -107,29 +81,9 @@ public class Crypt {
             System.out.println("Usage: java Crypt <crypt/decrypt> <input file> <output file> <key>");
             System.exit(1);
         }
-        String status = args[0];
-        String inputFileName = args[1];
-        String outputFileName = args[2];
-        int key = -1;
-        try {
-            key = Integer.parseInt(args[3]);
-        } catch (NumberFormatException e) {
-            System.out.println("Your key should be a number from 0 to 255");
+        CryptElement cryptElement = new CryptElement(args[0], args[1], args[2], args[3]);
+        if (!transformFile(cryptElement)) {
             System.exit(1);
-        }
-        if (key < 0 || key > 255) {
-             System.out.println("Your key should be in range from 0 to 255");
-             System.exit(1);
-        }
-        if (status.equals("crypt")) {
-            if (!crypt(inputFileName, outputFileName, key)) {
-                System.exit(1);
-            }
-        }
-        if (status.equals("decrypt")) {
-            if (!decrypt(inputFileName, outputFileName, key)) {
-                System.exit(1);
-            }
         }
         System.exit(0);
     }

@@ -6,19 +6,20 @@ else
  echo test 1 exit code $?
 fi 
 
-java Crypt crypt input.txt output.txt 300 > result.txt
+java Crypt crypt input6.txt output.txt 300 > result.txt
 if cmp -s result.txt result2.txt ; then
  echo test 2 passed
 else
  echo test 2 exit code $?
 fi
 
-java Crypt crypt input.txt output.txt bb > result.txt
+java Crypt crypt input6.txt output.txt bb > result.txt
 if cmp -s result.txt result3.txt ; then
  echo test 3 passed
 else
  echo test 3 exit code $?
 fi
+
 java Crypt crypt none.txt output.txt 100  > result.txt
 if cmp -s result.txt result4.txt ; then
  echo test 4 passed
