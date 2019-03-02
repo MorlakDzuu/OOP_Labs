@@ -1,0 +1,1 @@
+Usage: java Crypt <crypt/decrypt> <input file> <output file> <key>

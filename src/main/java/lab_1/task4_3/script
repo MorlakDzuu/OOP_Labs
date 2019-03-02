@@ -1,0 +1,55 @@
+#!/bin/bash
+java Crypt input.txt output.txt > result.txt
+if cmp -s result.txt result1.txt ; then
+ echo test 1 passed
+else 
+ echo test 1 exit code $?
+fi 
+
+java Crypt crypt input.txt output.txt 300 > result.txt
+if cmp -s result.txt result2.txt ; then
+ echo test 2 passed
+else
+ echo test 2 exit code $?
+fi
+
+java Crypt crypt input.txt output.txt bb > result.txt
+if cmp -s result.txt result3.txt ; then
+ echo test 3 passed
+else
+ echo test 3 exit code $?
+fi
+java Crypt crypt none.txt output.txt 100  > result.txt
+if cmp -s result.txt result4.txt ; then
+ echo test 4 passed
+else
+ echo test 4 exit code $?
+fi
+
+java Crypt crypt input6.txt none.txt 100 > result.txt
+if cmp -s result.txt result5.txt ; then
+ echo test 5 passed
+else
+ echo test 5 exit code $?
+fi
+
+java Crypt crypt input6.txt result.txt 100
+if cmp -s result.txt result6.txt ; then
+ echo test 6 passed
+else
+ echo test 6 exit code $?
+fi
+
+java Crypt decrypt input7 output.jpg 100
+if cmp -s output.jpg result7.jpg ; then
+ echo test 7 passed
+else
+ echo test 7 exit code $?
+fi
+
+java Crypt crypt input8 result 100
+if cmp -s result result8 ; then
+ echo test 8 passed
+else
+ echo test 8 exit code $?
+fi
