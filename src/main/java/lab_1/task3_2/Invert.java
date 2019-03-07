@@ -70,7 +70,7 @@ public class Invert {
         return minor;
     }
 
-    public static float[][] getAdditionMatrix(float[][] matrix) {
+    public static float[][] getConjugateMatrix(float[][] matrix) {
         float[][] extraMatrix = new float[3][3];
         int k = 1;
         for (int i = 0; i < 3; i++) {
@@ -84,7 +84,7 @@ public class Invert {
 
     public static float[][] invertMatrix(float[][] matrix) {
         float[][] invertMatrix = new float[3][3];
-        float[][] extraMatrix = getAdditionMatrix(matrix);
+        float[][] extraMatrix = getConjugateMatrix(matrix);
         float det = getDeterminant(matrix);
         if (det == 0) {
             System.out.println("Determinant equals 0, invert matrix does not exist");
