@@ -20,7 +20,7 @@ else
  echo test 3 exit code $?
 fi
 
-java Crypt crypt none.txt output.txt 100  > result.txt
+java Crypt crypt non.txt output.txt 100  > result.txt
 if cmp -s result.txt result4.txt ; then
  echo test 4 passed
 else
