@@ -2,21 +2,26 @@ import java.util.Scanner;
 
 public class Dictionary {
 
-    public static void main(String[] args) {
-        Scanner inputScanner = new Scanner(System.in);
+    public static DictionaryMap initDictionary(String fileName) {
         DictionaryMap dictionaryMap;
-        System.out.println("Введите имя файла");
-        String inputString = inputScanner.nextLine();
-        if (!inputString.isEmpty()) {
-            dictionaryMap = new DictionaryMap(inputString);
-            System.out.println("Был выбран словарь под названием \"" + inputString + "\"");
+        if (!fileName.isEmpty()) {
+            dictionaryMap = new DictionaryMap(fileName);
+            System.out.println("Был выбран словарь под названием \"" + fileName + "\"");
         } else {
             dictionaryMap = new DictionaryMap();
             System.out.println("Был выбран стандартный словарь");
         }
+        return dictionaryMap;
+    }
+
+    public static void main(String[] args) {
+        Scanner inputScanner = new Scanner(System.in);
+        System.out.println("Введите имя файла");
+        String inputString = inputScanner.nextLine();
+        DictionaryMap dictionaryMap = initDictionary(inputString);
         while (true) {
             inputString = inputScanner.nextLine();
-            if (inputString.equals("@close")) {
+            if (inputString.equals("...")) {
                 break;
             }
             if (!inputString.equals("")) {

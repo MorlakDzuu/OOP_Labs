@@ -23,8 +23,7 @@ public class DictionaryMap {
     }
 
     private void initMap() {
-        isModified = false;
-        File inputFile = new File(System.getProperty("user.dir"), fileName);
+        File inputFile = new File(fileName);
         if (inputFile.exists()) {
             try (FileInputStream fis = new FileInputStream(inputFile);
                  ObjectInputStream ois = new ObjectInputStream(fis)) {
@@ -79,17 +78,13 @@ public class DictionaryMap {
         } else return null;
     }
 
-    public void put(String key, String value) {
-        if (value.substring(0, 1).getBytes().length == 2) {
-            map.put(value, key);
+    public void put(String word, String translation) {
+        if (word.substring(0, 1).getBytes().length == 2) {
+            map.put(word, translation);
         } else {
-            map.put(key, value);
+            map.put(translation, word);
         }
         setModified(true);
-    }
-
-    public void clearMap() {
-        map.clear();
     }
 
     public boolean getModified() {

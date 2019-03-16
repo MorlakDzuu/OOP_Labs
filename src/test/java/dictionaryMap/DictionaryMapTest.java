@@ -2,7 +2,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.io.File;
 
 public class DictionaryMapTest {
 
@@ -15,8 +15,8 @@ public class DictionaryMapTest {
 
     @After
     public void remove() {
-        dictionaryMap.clearMap();
-        dictionaryMap.saveDictionary();
+        File file = new File("test");
+        file.delete();
     }
 
     @Test
@@ -26,6 +26,7 @@ public class DictionaryMapTest {
         dictionaryMap.put("cat", "кошка");
         dictionaryMap.saveDictionary();
         DictionaryMap newDictionaryMap = new DictionaryMap("test");
+
         assertEquals("здравствуйте, привет", newDictionaryMap.get("hello"));
         assertEquals("кошка", newDictionaryMap.get("cat"));
         assertEquals(null, dictionaryMap.get("cucumber"));
