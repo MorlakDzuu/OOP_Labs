@@ -10,15 +10,19 @@ public class DictionaryMap {
 
     private boolean isModified;
 
+    private String fileName;
+
     public DictionaryMap(String fileName) {
-        initMap(fileName);
+        this.fileName = fileName;
+        initMap();
     }
 
     public DictionaryMap() {
-        initMap("dictionary");
+        fileName = "dictionary";
+        initMap();
     }
 
-    private void initMap(String fileName) {
+    private void initMap() {
         isModified = false;
         File inputFile = new File(System.getProperty("user.dir"), fileName);
         if (inputFile.exists()) {
@@ -36,7 +40,7 @@ public class DictionaryMap {
 
     public void saveDictionary() {
         try {
-            File objectFile = new File(System.getProperty("user.dir"), "dictionary");
+            File objectFile = new File(System.getProperty("user.dir"), fileName);
             if (!objectFile.exists()) {
                 objectFile.createNewFile();
             }

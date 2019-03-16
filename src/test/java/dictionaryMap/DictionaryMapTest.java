@@ -10,7 +10,7 @@ public class DictionaryMapTest {
 
     @Before
     public void init() {
-        dictionaryMap = new DictionaryMap();
+        dictionaryMap = new DictionaryMap("test");
     }
 
     @After
@@ -25,7 +25,7 @@ public class DictionaryMapTest {
         dictionaryMap.put("hello", "здравствуйте");
         dictionaryMap.put("cat", "кошка");
         dictionaryMap.saveDictionary();
-        DictionaryMap newDictionaryMap = new DictionaryMap();
+        DictionaryMap newDictionaryMap = new DictionaryMap("test");
         assertEquals("здравствуйте, привет", newDictionaryMap.get("hello"));
         assertEquals("кошка", newDictionaryMap.get("cat"));
         assertEquals(null, dictionaryMap.get("cucumber"));
