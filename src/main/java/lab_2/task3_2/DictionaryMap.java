@@ -39,7 +39,7 @@ public class DictionaryMap {
 
     public void saveDictionary() {
         try {
-            File objectFile = new File(System.getProperty("user.dir"), fileName);
+            File objectFile = new File(fileName);
             if (!objectFile.exists()) {
                 objectFile.createNewFile();
             }
@@ -79,6 +79,7 @@ public class DictionaryMap {
     }
 
     public void put(String word, String translation) {
+        if (word.isEmpty() || translation.isEmpty()) return;
         if (word.substring(0, 1).getBytes().length == 2) {
             map.put(word, translation);
         } else {
