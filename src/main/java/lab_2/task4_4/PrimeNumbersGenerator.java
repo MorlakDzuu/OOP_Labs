@@ -54,8 +54,25 @@ public class PrimeNumbersGenerator {
     }
 
     public static void main(String[] args) {
-        BitSet bitSet = getPrimaryNumbers(10);
-        System.out.println(bitSet);
-        System.out.println(bitSet.stream().count());
+        String usageString = "Usage: java PrimeNumbersGenerator <number from the range 0..100000000>";
+        if (args.length != 1) {
+            System.out.println(usageString);
+            System.exit(1);
+        }
+        int upperBound = 0;
+        try {
+            upperBound = Integer.valueOf(args[0]);
+        } catch (NumberFormatException e) {
+            System.out.println(usageString);
+            System.exit(1);
+        }
+        if (upperBound > 100000000 || upperBound < 0) {
+            System.out.println(usageString);
+            System.exit(1);
+        }
+        BitSet primaryNumbers = getPrimaryNumbers(Integer.valueOf(args[0]));
+        primaryNumbers.stream().forEach(elem -> System.out.print(elem + " "));
+        System.out.println();
+        System.exit(0);
     }
 }
