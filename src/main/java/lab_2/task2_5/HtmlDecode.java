@@ -10,21 +10,13 @@ public class HtmlDecode {
         return inputString;
     }
 
-    public static String readInput(Scanner scanner) {
-        String inputString = scanner.nextLine();
-        String result = "";
-        while (!inputString.isEmpty()) {
-            result += inputString;
-            inputString = scanner.nextLine();
-            if (!inputString.isEmpty()) result += '\n';
-        }
-        return result;
-    }
-
     public static void main(String args[]) {
-        System.out.println("Введите html-сущность, которую надо декодировать");
+        System.out.println("Введите html-сущность, которую надо декодировать (чтобы выйти, введите ...)");
         Scanner scanner = new Scanner(System.in);
-        String inputString = readInput(scanner);
-        System.out.println(htmlDecode(inputString));
+        String inputString = scanner.nextLine();
+        while (!inputString.equals("...")) {
+            System.out.println(htmlDecode(inputString));
+            inputString = scanner.nextLine();
+        }
     }
 }
