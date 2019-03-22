@@ -1,37 +1,29 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
-import java.util.List;
 
 import static java.lang.StrictMath.sqrt;
 
 public class PrimeNumbersGenerator {
 
-    public static List<Integer> generatePrimeNumbers(int upperBound) {
-        double upperBoundSqrt = sqrt(upperBound);
-        List<Integer> primaryNumbers = new ArrayList<>();
-        Boolean[] array = new Boolean[upperBound + 1];
-        Arrays.fill(array, false);
-        for (int i = 2; i <= upperBoundSqrt; i++) {
-            if (!array[i]) {
-                for (int j = i * i; j <= upperBound; j += i) {
-                    array[j] = true;
-                }
-            }
-        }
-        for (int i = 5; i <= upperBound; i++) {
-            if (!array[i]) {
-                primaryNumbers.add(i);
-            }
-        }
-        return primaryNumbers;
-    }
-
-    public static BitSet getPrimaryNumbers(int upperBound) {
-        BitSet primaryNumbers = new BitSet();
+    public static BitSet getPrimaryNumbers(int upperBound) { //алгоритм эрастосфена не может дать требуемой скорости(возможно кроме сегментированного)
+        // но алгоритм Аткина работает намного быстрей, поэтому реализуем его
+        BitSet primaryNumbers = new BitSet(); //создаем битовый массив для хранения факта того, что число является простым
         double upperBoundSqrt = sqrt(upperBound);
         for (int x = 1; x <= upperBoundSqrt; x++) {
             for (int y = 1, n; y <= upperBoundSqrt; y++) {
+                /* Существует теорема. Пусть n — натуральное число, которое не делится ни на какой полный квадрат. Тогда
+                если n представимо в виде 4k+1, то оно просто тогда и только тогда, когда число натуральных решений уравнения 4x2+y2 = n нечетно.
+                если n представимо в виде 6k+1, то оно просто тогда и только тогда, когда число натуральных решений уравнения 3x2+y2 = n нечетно.
+                если n представимо в виде 12k-1, то оно просто тогда и только тогда, когда число натуральных решений уравнения 3x2−y2 = n,
+                для которых x > y, нечетно.
+                ссылка на доказательство http://www.ams.org/journals/mcom/2004-73-246/S0025-5718-03-01501-1/S0025-5718-03-01501-1.pdf
+                Я, кончено, старался, но так до конца его и не понял
+                */
+                /* Подбираем такие числа x и y, что результат решения уравнений по модулю 12 имеет нужный нам остаток:
+                4x^2 + y^2  - остаток 1 или 5
+                3x^2 + y^2 - остаток 7
+                3x^2 - y^2 - остаток 11;
+                если такие числа подобраны, то результат решения помечается, как простое;
+                если резутат решения уже помечен(как простое число), то оно помечается, как составное(не простое) */
                 n = 4*x*x + y*y;
                 if (((n % 12 == 1) || (n % 12 == 5)) && (n <= upperBound)) primaryNumbers.flip(n);
                 n -= x*x;
@@ -42,12 +34,18 @@ public class PrimeNumbersGenerator {
                 }
             }
         }
-        for (int number: generatePrimeNumbers((int) upperBoundSqrt)) {
-            number *= number;
-            for (int i = number; i <= upperBound; i += number) {
-                primaryNumbers.set(i, false);
+        /* Предварительное просеиваение, к сожалению, пропускает числа, кратные квадрату простого числа, поэтому
+        мы должны отдельно пометить их, как не простые*/
+        int   squareOfNumber;
+        for (int number = 5; number <= upperBoundSqrt; number++) {
+            if (primaryNumbers.get(number)) {
+                squareOfNumber = number * number;
+                for (int i = squareOfNumber; i <= upperBound; i += squareOfNumber) primaryNumbers.set(i, false);
             }
         }
+        /* Так как мы находим остаток от деления на 12(удвоенное призведение простых чисел 2 и 3), то
+         нам нужно пометить их, как заведомо простые числа
+        допустим, если бы мы брали остатки деления на 60 ( 2*(2*3*5) ), то мы должны были бы учитывать и 5 */
         if (upperBound >= 2) primaryNumbers.set(2, true);
         if (upperBound >= 3) primaryNumbers.set(3, true);
         return primaryNumbers;
