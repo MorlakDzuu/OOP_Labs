@@ -14,30 +14,6 @@ public class URL {
         this.urlString = urlString;
     }
 
-    public String getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getDoc() {
-        return doc;
-    }
-
-    public void setDoc(String doc) {
-        this.doc = doc;
-    }
-
     private boolean parseURL() {
         String url = urlString;
         Pattern pattern = Pattern.compile("...+?:", Pattern.CASE_INSENSITIVE);
