@@ -5,7 +5,7 @@ public class URL {
 
     private String urlString;
 
-    private String protocol;
+    private Protocol protocol;
     private String host;
     private String port;
     private String doc;
@@ -21,15 +21,19 @@ public class URL {
         String protocol;
         if (matcher.find()) {
             protocol = matcher.group(0).replace(":", "");
-            this.protocol = protocol;
+            try {
+                this.protocol = Protocol.valueOf(protocol.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return false;
+            }
             url = url.replace(matcher.group(0), "");
         } else return false;
-        pattern = Pattern.compile("/.+?/");
+        pattern = Pattern.compile("/.+?/", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(url);
         if (matcher.find()) {
             String host = matcher.group(0).replace("/", "");
             url = url.replace(host, "");
-            pattern = Pattern.compile(":.++");
+            pattern = Pattern.compile(":.++", Pattern.CASE_INSENSITIVE);
             matcher = pattern.matcher(host);
             String port = "";
             if (matcher.find()) {
@@ -43,15 +47,14 @@ public class URL {
             this.port = port;
             this.host = host;
         } else return false;
-        this.doc = url.replace("//", "");
+        this.doc = url.replace("//", "").substring(1);
         return true;
     }
 
     public String getMeta() {
         String resultString = null;
         if (parseURL()) {
-            resultString = "PROTOCOL : " + protocol + "\n" +
-                           "HOST : " + host + "\n" +
+            resultString = "HOST : " + host + "\n" +
                            "PORT : " + port + "\n" +
                            "DOC : " + doc;
         }
