@@ -16,19 +16,18 @@ public class URL {
 
     private boolean parseURL() {
         String url = urlString;
-        Pattern pattern = Pattern.compile("...+?:", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("...+?://", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(url);
-        String protocol;
-        if (matcher.find()) {
-            protocol = matcher.group(0).replace(":", "");
-            try {
-                this.protocol = Protocol.valueOf(protocol.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                return false;
-            }
-            url = url.replace(matcher.group(0), "");
-        } else return false;
-        pattern = Pattern.compile("/.+?/", Pattern.CASE_INSENSITIVE);
+        if (!matcher.find()) {
+            return false;
+        }
+        try {
+            this.protocol = Protocol.valueOf(matcher.group(0).replace("://", "").toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        url = url.replace(matcher.group(0), "");
+        pattern = Pattern.compile(".+?/", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(url);
         if (matcher.find()) {
             String host = matcher.group(0).replace("/", "");
@@ -40,9 +39,9 @@ public class URL {
                 port = matcher.group(0).replace(":", "");
                 host = host.replace(port, "").toLowerCase().replace(":", "");
             } else {
-                if (protocol.equals("https")) port = "443";
-                else if (protocol.equals("http")) port = "80";
-                else if (protocol.equals("ftp")) port = "21";
+                if (this.protocol.toString().equals("HTTPS")) port = "443";
+                else if (this.protocol.toString().equals("HTTP")) port = "80";
+                else if (this.protocol.toString().equals("FTP")) port = "21";
             }
             this.port = port;
             this.host = host;
