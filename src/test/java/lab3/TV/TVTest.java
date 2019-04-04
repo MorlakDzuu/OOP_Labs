@@ -26,5 +26,8 @@ public class TVTest {
         assertEquals(99, tv.getChanel());
         tv.setChanel(1);
         assertEquals(1, tv.getChanel());
+        assertEquals("Телевизор включен\nНомер канала: 1", tv.getState());
+        tv.turnOf();
+        assertEquals("Телевизор выключен\nПоследний включенный канал: 1", tv.getState());
     }
 }

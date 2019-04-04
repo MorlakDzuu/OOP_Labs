@@ -24,8 +24,7 @@ public class TV {
     }
 
     public String getState() {
-        String str = "Номер канала: " + chanel;
-        if (status) return "Телевизор включен\n" + str;
-        return "Телевизор выключен\n" + str;
+        if (status) return "Телевизор включен\nНомер канала: " + chanel;
+        return "Телевизор выключен\nПоследний включенный канал: " + chanel;
     }
 }
