@@ -50,8 +50,12 @@ public class TV {
         return "Телевизор выключен\nКанал при включении: " + channel + previousChannelString + names;
     }
 
-    public void selectPreviousChannel() {
-        if (status && previousChannel != 0) setChannel(previousChannel);
+    public boolean selectPreviousChannel() {
+        if (status && previousChannel != 0) {
+            setChannel(previousChannel);
+            return true;
+        }
+        return false;
     }
 
     public boolean setChannelName(int channelNumber, String channelName) {
@@ -95,7 +99,9 @@ public class TV {
     }
 
     public boolean deleteChannelName(String name) {
-        if (status) channelsNames.remove(getChannelByName(name));
+        if (status) {
+            if (channelsNames.remove(getChannelByName(name)) != null) return true;
+        }
         return false;
     }
 }
