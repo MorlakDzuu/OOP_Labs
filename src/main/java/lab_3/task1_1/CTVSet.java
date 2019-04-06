@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class CTVSet {
-    static String TURN_OF_ERROR = "Телевизор выключен";
-    static String WRONG_CHANNEL_NUMBER = "Неправильно задан номер канала";
-    static String MISSING_CHANNEL_NUMBER = "Номер канала не задан";
+    final static String TURN_OF_ERROR = "Телевизор выключен";
+    final static String WRONG_CHANNEL_NUMBER = "Неправильно задан номер канала";
+    final static String MISSING_CHANNEL_NUMBER = "Номер канала не задан";
 
     public static void selectChannel(TV tv, String inputString) {
         if (!tv.getStatus()) {
