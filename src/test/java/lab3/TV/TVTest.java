@@ -56,8 +56,8 @@ public class TVTest {
 
         tv.setChannelName(2, "Hello");
         tv.setChannelName(3, "Hello");
-        assertEquals("Hello", tv.getChannelName(2));
-        assertEquals(null, tv.getChannelName(3));
+        assertEquals("Hello", tv.getChannelName(3));
+        assertEquals(null, tv.getChannelName(2));
     }
 
     @Test

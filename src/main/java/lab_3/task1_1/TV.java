@@ -65,11 +65,9 @@ public class TV {
         if (channelName.replace(" ", "").equals("")) return false;
         channelName = removeExtraBlanks(channelName);
         if (channelsNames == null) channelsNames = new TreeMap<>();
-        if (!channelsNames.containsValue(channelName)) {
-            channelsNames.put((byte) channelNumber, channelName);
-            return true;
-        }
-        return false;
+        deleteChannelName(channelName);
+        channelsNames.put((byte) channelNumber, channelName);
+        return true;
     }
 
     public String getChannelName(int channelNumber) {
