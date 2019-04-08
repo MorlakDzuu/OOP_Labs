@@ -1,12 +1,14 @@
 import java.util.Scanner;
 
-public class CTVSet {
+public class TVSet {
     final static String TURN_OF_ERROR = "Телевизор выключен";
     final static String WRONG_CHANNEL_NUMBER = "Неправильно задан номер канала";
     final static String MISSING_CHANNEL_NUMBER = "Номер канала не задан";
 
-    public static void selectChannel(TV tv, String inputString) {
-        if (!tv.getStatus()) {
+    public TV tv = new TV();
+
+    public void selectChannel(String inputString) {
+        if (!tv.getTurnedOn()) {
             System.out.println(TURN_OF_ERROR);
             return;
         }
@@ -14,6 +16,7 @@ public class CTVSet {
             System.out.println(MISSING_CHANNEL_NUMBER);
             return;
         }
+        inputString = inputString.trim();
         try {
             int channel = Integer.parseInt(inputString);
             if (!tv.setChannel(channel)) System.out.println(WRONG_CHANNEL_NUMBER);
@@ -24,14 +27,14 @@ public class CTVSet {
         }
     }
 
-    public static void setChannelName(TV tv, String inputString) {
-        if (!tv.getStatus()) {
+    public void setChannelName(String inputString) {
+        if (!tv.getTurnedOn()) {
             System.out.println(TURN_OF_ERROR);
             return;
         }
         try {
             Integer channel = Integer.parseInt(inputString.split(" ")[0]);
-            inputString = inputString.replace(channel.toString(), "").trim();
+            inputString = inputString.substring(inputString.split(" ")[0].length()).trim();
             if (tv.setChannelName(channel, inputString)) {
                 System.out.println("Канал с номером " + channel + " теперь называется как \"" + inputString + "\"");
             } else  {
@@ -42,8 +45,8 @@ public class CTVSet {
         }
     }
 
-    public static void deleteChannelName(TV tv, String inputString) {
-        if (!tv.getStatus()) {
+    public void deleteChannelName(String inputString) {
+        if (!tv.getTurnedOn()) {
             System.out.println(TURN_OF_ERROR);
             return;
         }
@@ -51,8 +54,8 @@ public class CTVSet {
         else System.out.println("Имя канала \"" + inputString + "\" было удалено");
     }
 
-    public static void getChannelName(TV tv, String inputString) {
-        if (!tv.getStatus()) {
+    public void getChannelName(String inputString) {
+        if (!tv.getTurnedOn()) {
             System.out.println(TURN_OF_ERROR);
             return;
         }
@@ -67,8 +70,8 @@ public class CTVSet {
         System.out.println(name);
     }
 
-    public static void selectPreviousChannel(TV tv) {
-        if (!tv.getStatus()) {
+    public void selectPreviousChannel() {
+        if (!tv.getTurnedOn()) {
             System.out.println(TURN_OF_ERROR);
             return;
         }
@@ -76,7 +79,17 @@ public class CTVSet {
         else System.out.println("В памяти не был обнаружен номер предыдущего канала");
     }
 
-    public static void CTVSet() {
+    public void turnOn() {
+        tv.turnOn();
+        System.out.println("Телевизор включен");
+    }
+
+    public void turnOf() {
+        tv.turnOf();
+        System.out.println(TURN_OF_ERROR);
+    }
+
+    public void remoteControl() {
         Scanner inputScanner = new Scanner(System.in);
         String inputString = inputScanner.nextLine();
         TV tv = new TV();
@@ -84,31 +97,31 @@ public class CTVSet {
             String command = inputString.split(" ")[0];
             inputString = inputString.replace(command, "").trim();
 
-            if (command.equals("TurnOn")) {
-                tv.turnOn();
-                System.out.println("Телевизор включен");
-            } else if (command.equals("TurnOf")) {
-                tv.turnOf();
-                System.out.println(TURN_OF_ERROR);
-            } else if (command.equals("info"))
+            if (command.equals("TurnOn"))
+                turnOn();
+            else if (command.equals("TurnOff"))
+                turnOf();
+            else if (command.equals("Info"))
                 System.out.println(tv.getInfo());
             else if (command.equals("SelectPreviousChannel"))
-                selectPreviousChannel(tv);
+                selectPreviousChannel();
             else if (command.equals("SelectChannel"))
-                selectChannel(tv, inputString);
+                selectChannel(inputString);
             else if (command.equals("SetChannelName"))
-              setChannelName(tv, inputString);
+              setChannelName(inputString);
             else if (command.equals("DeleteChannelName"))
-              deleteChannelName(tv, inputString);
+              deleteChannelName(inputString);
             else if (command.equals("GetChannelName"))
-                getChannelName(tv, inputString);
+                getChannelName(inputString);
+            else System.out.println("Команда не распознана");
 
             inputString = inputScanner.nextLine();
         }
     }
 
     public static void main(String[] args) {
-        CTVSet();
+        TVSet tvSet = new TVSet();
+        tvSet.remoteControl();
         System.exit(0);
     }
 }
