@@ -1,11 +1,23 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.function.Consumer;
+
 import static org.junit.Assert.*;
 
 public class TVTest {
 
     TV tv;
+
+    private void assertFailure(Runnable runnable, int expected) {
+        runnable.run();
+        assertEquals(expected, tv.getChannel());
+    }
+
+    private void assertSuccess(Runnable runnable, int expected) {
+        runnable.run();
+        assertEquals(expected, tv.getChannel());
+    }
 
     @Before
     public void init() {
@@ -15,24 +27,18 @@ public class TVTest {
     @Test
     public void getChanel() {
         assertEquals(0, tv.getChannel());
-        tv.setChannel(20);
-        assertEquals(0, tv.getChannel());
+        assertFailure(() -> tv.setChannel(20), 0);
         tv.turnOn();
         assertEquals(1, tv.getChannel());
-        tv.setChannel(20);
-        assertEquals(20, tv.getChannel());
+        assertSuccess(() -> tv.setChannel(20), 20);
         tv.turnOf();
         assertEquals(0, tv.getChannel());
         tv.turnOn();
         assertEquals(20, tv.getChannel());
-        tv.setChannel(100);
-        assertEquals(20, tv.getChannel());
-        tv.setChannel(99);
-        assertEquals(99, tv.getChannel());
-        tv.setChannel(0);
-        assertEquals(99, tv.getChannel());
-        tv.setChannel(1);
-        assertEquals(1, tv.getChannel());
+        assertFailure(() -> tv.setChannel(100), 20);
+        assertSuccess(() -> tv.setChannel(99), 99);
+        assertFailure(() -> tv.setChannel(0), 99);
+        assertSuccess(() -> tv.setChannel(1), 1);
     }
 
     @Test
@@ -80,6 +86,21 @@ public class TVTest {
         assertEquals(1, tv.getChannelByName("NAME"));
         tv.deleteChannelName("NAME");
         assertEquals(-1, tv.getChannelByName("NAME"));
+    }
+
+    @Test
+    public void previousChannel() {
+        assertEquals(false, tv.selectPreviousChannel());
+        assertEquals(0, tv.getPreviousChannel());
+        tv.turnOn();
+        assertEquals(0, tv.getPreviousChannel());
+        assertEquals(false, tv.selectPreviousChannel());
+        tv.setChannel(20);
+        assertEquals(1, tv.getPreviousChannel());
+        tv.setChannel(30);
+        assertEquals(20, tv.getPreviousChannel());
+        tv.setChannel(100);
+        assertEquals(20, tv.getPreviousChannel());
     }
 
     @Test
