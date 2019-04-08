@@ -4,8 +4,7 @@ import static java.lang.StrictMath.sqrt;
 
 public class PrimeNumbersGenerator {
 
-    public static BitSet getPrimaryNumbers(int upperBound) { //алгоритм эрастосфена не может дать требуемой скорости(возможно кроме сегментированного)
-        // но алгоритм Аткина работает намного быстрей, поэтому реализуем его
+    private static BitSet preliminarySelection(int upperBound) {
         BitSet primaryNumbers = new BitSet(); //создаем битовый массив для хранения факта того, что число является простым
         double upperBoundSqrt = sqrt(upperBound);
         for (int x = 1; x <= upperBoundSqrt; x++) {
@@ -25,24 +24,40 @@ public class PrimeNumbersGenerator {
                 если такие числа подобраны, то результат решения помечается, как простое;
                 если резутат решения уже помечен(как простое число), то оно помечается, как составное(не простое) */
                 n = 4*x*x + y*y;
-                if (((n % 12 == 1) || (n % 12 == 5)) && (n <= upperBound)) primaryNumbers.flip(n);
+                if (((n % 12 == 1) || (n % 12 == 5)) && (n <= upperBound))
+                    primaryNumbers.flip(n);
                 n -= x*x;
-                if ((n % 12 == 7) && (n <= upperBound)) primaryNumbers.flip(n);
+                if ((n % 12 == 7) && (n <= upperBound))
+                    primaryNumbers.flip(n);
                 if (x > y) {
                     n -= 2*y*y;
-                    if ((n % 12 == 11) && (n <= upperBound)) primaryNumbers.flip(n);
+                    if ((n % 12 == 11) && (n <= upperBound))
+                        primaryNumbers.flip(n);
                 }
             }
         }
+        return primaryNumbers;
+    }
+
+    private static BitSet postSelection(BitSet primaryNumbers, int upperBound) {
+        double upperBoundSqrt = sqrt(upperBound);
         /* Предварительное просеиваение, к сожалению, пропускает числа, кратные квадрату простого числа, поэтому
         мы должны отдельно пометить их, как не простые*/
         int   squareOfNumber;
         for (int number = 5; number <= upperBoundSqrt; number++) {
             if (primaryNumbers.get(number)) {
                 squareOfNumber = number * number;
-                for (int i = squareOfNumber; i <= upperBound; i += squareOfNumber) primaryNumbers.set(i, false);
+                for (int i = squareOfNumber; i <= upperBound; i += squareOfNumber)
+                    primaryNumbers.set(i, false);
             }
         }
+        return primaryNumbers;
+    }
+
+    public  static BitSet getPrimaryNumbers(int upperBound) { //алгоритм эрастосфена не может дать требуемой скорости(возможно кроме сегментированного)
+        // но алгоритм Аткина работает намного быстрей, поэтому реализуем его
+        BitSet primaryNumbers = preliminarySelection(upperBound); //предварительно просеиванем числа
+        primaryNumbers = postSelection(primaryNumbers, upperBound); //отсеиванием числа, кратные квадратам простых чисел
         /* Так как мы находим остаток от деления на 12(удвоенное призведение простых чисел 2 и 3), то
          нам нужно пометить их, как заведомо простые числа
         допустим, если бы мы брали остатки деления на 60 ( 2*(2*3*5) ), то мы должны были бы учитывать и 5 */
