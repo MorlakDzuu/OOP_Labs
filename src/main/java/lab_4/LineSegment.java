@@ -31,10 +31,6 @@ public class LineSegment implements IShape {
         return 0;
     }
 
-    public double getLength() {
-        return sqrt(square(endPoint.getX() - startPoint.getX()) + square(endPoint.getY() - startPoint.getY()));
-    }
-
     @Override
     public double getPerimeter() {
         return 0;
@@ -49,6 +45,10 @@ public class LineSegment implements IShape {
     public String toString() {
         return  "line " + startPoint.getX() + " " + startPoint.getY() + " " +
                 endPoint.getX() + " " + endPoint.getY() + " " + Integer.toHexString(outlineColor);
+    }
+
+    public double getLength() {
+        return sqrt(square(endPoint.getX() - startPoint.getX()) + square(endPoint.getY() - startPoint.getY()));
     }
 
     public Point getStartPoint() {
