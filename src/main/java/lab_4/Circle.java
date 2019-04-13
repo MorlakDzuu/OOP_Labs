@@ -49,6 +49,11 @@ public class Circle implements ISolidShape {
         return outlineColor;
     }
 
+    public String toString() {
+        return "circle " + center.getX() + " " + center.getY() + " " + radius + " "
+                + Integer.toHexString(outlineColor) + " " + Integer.toHexString(fillColor);
+    }
+
     public Point getCenter() {
         return center;
     }
