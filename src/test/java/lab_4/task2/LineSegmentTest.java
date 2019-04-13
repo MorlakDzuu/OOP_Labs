@@ -13,11 +13,11 @@ public class LineSegmentTest {
     @Test
     public void getPerimeter() {
         lineSegment = new LineSegment(new Point(0, 2), new Point(5, 2));
-        assertEqualsDouble(5, lineSegment.getPerimeter());
+        assertEqualsDouble(5, lineSegment.getLength());
         lineSegment = new LineSegment(new Point(0, 3), new Point(4, 0));
-        assertEqualsDouble(5, lineSegment.getPerimeter());
+        assertEqualsDouble(5, lineSegment.getLength());
         lineSegment = new LineSegment(new Point(0, 0), new Point(0, 0));
-        assertEqualsDouble(0, lineSegment.getPerimeter());
+        assertEqualsDouble(0, lineSegment.getLength());
     }
 
     @Test

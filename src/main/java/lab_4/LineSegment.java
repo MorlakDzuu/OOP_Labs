@@ -7,15 +7,23 @@ public class LineSegment implements IShape {
     private int outlineColor;
 
     public LineSegment(Point startPoint, Point endPoint) {
+        if (startPoint.equals(endPoint))
+            throw new IllegalArgumentException("Start point and end point have the same coordinates");
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         outlineColor = 0;
     }
 
-    public LineSegment(Point startPoint, Point endPoint, int outlineColor) {
+    public LineSegment(Point startPoint, Point endPoint, String outlineColor) {
+        if (startPoint.equals(endPoint))
+            throw new IllegalArgumentException("Start point and end point have the same coordinates");
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.outlineColor = outlineColor;
+        try {
+            this.outlineColor = Integer.parseInt(outlineColor, 16);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Incorrect value of color");
+        }
     }
 
     @Override
@@ -23,9 +31,13 @@ public class LineSegment implements IShape {
         return 0;
     }
 
+    public double getLength() {
+        return sqrt(square(endPoint.getX() - startPoint.getX()) + square(endPoint.getY() - startPoint.getY()));
+    }
+
     @Override
     public double getPerimeter() {
-        return sqrt(square(endPoint.getX() - startPoint.getX()) + square(endPoint.getY() - startPoint.getY()));
+        return 0;
     }
 
     @Override
