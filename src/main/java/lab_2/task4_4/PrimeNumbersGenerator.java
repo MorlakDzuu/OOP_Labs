@@ -54,7 +54,7 @@ public class PrimeNumbersGenerator {
         return primaryNumbers;
     }
 
-    public  static BitSet getPrimaryNumbers(int upperBound) { //алгоритм эрастосфена не может дать требуемой скорости(возможно кроме сегментированного)
+    public static BitSet getPrimaryNumbers(int upperBound) { //алгоритм эрастосфена не может дать требуемой скорости(возможно кроме сегментированного)
         // но алгоритм Аткина работает намного быстрей, поэтому реализуем его
         BitSet primaryNumbers = preliminarySelection(upperBound); //предварительно просеиванем числа
         primaryNumbers = postSelection(primaryNumbers, upperBound); //отсеиванием числа, кратные квадратам простых чисел
