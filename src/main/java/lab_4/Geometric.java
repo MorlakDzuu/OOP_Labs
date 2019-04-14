@@ -171,7 +171,7 @@ public class Geometric {
             IShape shapeWithMinPerimeter = geometric.getMinPerimeterShape();
             System.out.println("Max area\n" + geometric.getShapeInfo(shapeWithMaxArea) + "\n");
             System.out.println("Min perimeter\n" + geometric.getShapeInfo(shapeWithMinPerimeter));
+            geometric.drawShapes();
         }
-        geometric.drawShapes();
     }
 }
