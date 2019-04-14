@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TriangleTest {
 
-    Triangle triangle;
+    private Triangle triangle;
 
     private void assertInvalidPointArguments(Point point1, Point point2, Point point3) {
         try {
@@ -25,7 +25,7 @@ public class TriangleTest {
                                 Integer.parseInt("ff0000", 16), Integer.parseInt("ff00", 16));
     }
 
-    public static void assertEqualsDouble(double dob1, double dob2) {
+    private static void assertEqualsDouble(double dob1, double dob2) {
         assertEquals(0, Double.compare(dob1, dob2));
     }
 

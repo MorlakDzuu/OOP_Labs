@@ -1,11 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PointTest {
 
-    Point point;
+    private Point point;
 
     @Before
     public void init() {
@@ -31,12 +31,12 @@ public class PointTest {
     public void equals() {
         Point point1 = new Point(1, 1);
         Point point2 = new Point(2, 2);
-        assertEquals(false, point1.equals(point2));
+        assertFalse(point1.equals(point2));
         point2 = new Point(1, 2);
-        assertEquals(false, point1.equals(point2));
+        assertFalse(point1.equals(point2));
         point2 = new Point(2, 1);
-        assertEquals(false, point1.equals(point2));
+        assertFalse(point1.equals(point2));
         point2 = new Point(1, 1);
-        assertEquals(true, point1.equals(point2));
+        assertTrue(point1.equals(point2));
     }
 }

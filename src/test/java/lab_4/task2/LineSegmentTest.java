@@ -6,14 +6,14 @@ import static org.junit.Assert.assertEquals;
 
 public class LineSegmentTest {
 
-    LineSegment lineSegment;
+    private LineSegment lineSegment;
 
     @Before
     public void init() {
         lineSegment = new LineSegment(new Point(0, 2), new Point(5, 2), Integer.parseInt("ffff00", 16));
     }
 
-    public static void assertEqualsDouble(double dob1, double dob2) {
+    private static void assertEqualsDouble(double dob1, double dob2) {
         assertEquals(0, Double.compare(dob1, dob2));
     }
 

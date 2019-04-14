@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RectangleTest {
 
-    Rectangle rectangle;
+    private Rectangle rectangle;
 
     private void assertInvalidArguments(Point point, double width, double height) {
         try {
