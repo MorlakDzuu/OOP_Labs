@@ -49,7 +49,7 @@ public class RectangleTest {
 
     @Test
     public void getRightBottom() {
-        assertEquals("12.0 -88.0", rectangle.getRightBottom().toString());
+        assertEquals("12.0 112.0", rectangle.getRightBottom().toString());
     }
 
     @Test

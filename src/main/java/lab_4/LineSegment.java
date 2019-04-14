@@ -2,7 +2,7 @@ import java.awt.*;
 
 import static java.lang.Math.sqrt;
 
-public class LineSegment implements IShape {
+public class LineSegment implements IShape, ICanvasDrawable {
 
     private Point startPoint;
     private Point endPoint;
@@ -55,5 +55,10 @@ public class LineSegment implements IShape {
 
     private static double square(double a) {
         return a*a;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawLine(startPoint, endPoint, outlineColor);
     }
 }

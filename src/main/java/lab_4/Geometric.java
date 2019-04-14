@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -141,6 +143,21 @@ public class Geometric {
         return outputString;
     }
 
+    private void drawShapes() {
+        JFrame jFrame = new JFrame("Пример диалогового окна"){
+            public void paint(Graphics graphics) {
+                super.paint(graphics);
+                Canvas canvas = new Canvas(graphics);
+                for (IShape shape: shapes) {
+                    ((ICanvasDrawable) shape).draw(canvas);
+                }
+            }
+        };
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setSize(800 , 600);
+        jFrame.setVisible(true);
+    }
+
     public static void main(String[] args) {
         Geometric geometric = new Geometric();
         Scanner inputScanner = new Scanner(System.in);
@@ -149,9 +166,12 @@ public class Geometric {
             System.out.print(geometric.performCommand(inputString));
             inputString = inputScanner.nextLine();
         }
-        IShape shapeWithMaxArea = geometric.getMaxAreaShape();
-        IShape shapeWithMinPerimeter = geometric.getMinPerimeterShape();
-        System.out.println("Max area\n" + geometric.getShapeInfo(shapeWithMaxArea) + "\n");
-        System.out.println("Min perimeter\n" + geometric.getShapeInfo(shapeWithMinPerimeter));
+        if (geometric.shapes.size() > 0) {
+            IShape shapeWithMaxArea = geometric.getMaxAreaShape();
+            IShape shapeWithMinPerimeter = geometric.getMinPerimeterShape();
+            System.out.println("Max area\n" + geometric.getShapeInfo(shapeWithMaxArea) + "\n");
+            System.out.println("Min perimeter\n" + geometric.getShapeInfo(shapeWithMinPerimeter));
+        }
+        geometric.drawShapes();
     }
 }

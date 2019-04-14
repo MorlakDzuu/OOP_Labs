@@ -1,6 +1,8 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Triangle implements ISolidShape {
+public class Triangle implements ISolidShape, ICanvasDrawable {
 
     private Point vertex1;
     private Point vertex2;
@@ -87,5 +89,13 @@ public class Triangle implements ISolidShape {
     @Override
     public int getOutlineColor() {
         return outlineColor;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawLine(vertex1, vertex2, outlineColor);
+        canvas.drawLine(vertex2, vertex3, outlineColor);
+        canvas.drawLine(vertex3, vertex1, outlineColor);
+        canvas.fillPolygon(new ArrayList<>(Arrays.asList(vertex1, vertex2, vertex3)), 3);
     }
 }

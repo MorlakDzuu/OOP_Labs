@@ -1,6 +1,8 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Rectangle implements ISolidShape {
+public class Rectangle implements ISolidShape, ICanvasDrawable {
 
     private Point startVertex;
     private double width;
@@ -70,7 +72,7 @@ public class Rectangle implements ISolidShape {
     }
 
     public Point getRightBottom() {
-        return new Point(startVertex.getX() + width, startVertex.getY() - height);
+        return new Point(startVertex.getX() + width, startVertex.getY() + height);
     }
 
     public double getWidth() {
@@ -79,5 +81,16 @@ public class Rectangle implements ISolidShape {
 
     public double getHeight() {
         return height;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        Point rightTopPoint = new Point(startVertex.getX() + width, startVertex.getY());
+        Point leftBottomPoint = new Point(startVertex.getX(), startVertex.getY() + height);
+        canvas.drawLine(startVertex, rightTopPoint, outlineColor);
+        canvas.drawLine(rightTopPoint, getRightBottom(), outlineColor);
+        canvas.drawLine(getRightBottom(), leftBottomPoint, outlineColor);
+        canvas.drawLine(leftBottomPoint, startVertex, outlineColor);
+        canvas.fillPolygon(new ArrayList<>(Arrays.asList(startVertex, rightTopPoint, getRightBottom(), leftBottomPoint)), fillColor);
     }
 }

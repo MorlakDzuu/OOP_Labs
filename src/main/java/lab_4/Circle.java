@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Circle implements ISolidShape {
+public class Circle implements ISolidShape, ICanvasDrawable {
 
     private Point center;
     private double radius;
@@ -69,5 +69,11 @@ public class Circle implements ISolidShape {
 
     public double getLength() {
         return 2 * Math.PI * radius;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawCircle(center, radius, outlineColor);
+        canvas.fillCircle(center, radius, outlineColor);
     }
 }
