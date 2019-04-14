@@ -8,11 +8,11 @@ import static org.junit.Assert.*;
 
 public class GeometricTest {
 
-    private geometric geometric;
+    private Geometric geometric;
 
     @Before
     public void ini() {
-        geometric = new geometric();
+        geometric = new Geometric();
     }
 
     @Test

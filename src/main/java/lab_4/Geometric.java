@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class geometric {
+public class Geometric {
 
     private ArrayList<IShape> shapes = new ArrayList<>();
 
@@ -142,7 +142,7 @@ public class geometric {
     }
 
     public static void main(String[] args) {
-        geometric geometric = new geometric();
+        Geometric geometric = new Geometric();
         Scanner inputScanner = new Scanner(System.in);
         String inputString = inputScanner.nextLine();
         while (!inputString.equals("...")) {
