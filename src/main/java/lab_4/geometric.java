@@ -3,11 +3,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class Geometric {
+public class geometric {
 
-    private static ArrayList<IShape> shapes = new ArrayList<>();
+    private ArrayList<IShape> shapes = new ArrayList<>();
 
-    static String performCommand(String command) {
+    public String performCommand(String command) {
         ArrayList<String> commandElements = new ArrayList<>(Arrays.asList(command.split(" ")));
         if (commandElements.size() <= 1)
             return "Invalid string\n";
@@ -47,7 +47,7 @@ public class Geometric {
         return "";
     }
 
-    static Rectangle getRectangle(ArrayList<String> arguments) {
+    public Rectangle getRectangle(ArrayList<String> arguments) {
         if (arguments.size() < 4 || arguments.size() > 6)
             return null;
         try {
@@ -67,7 +67,7 @@ public class Geometric {
         }
     }
 
-    static Triangle getTriangle(ArrayList<String> arguments) {
+    public Triangle getTriangle(ArrayList<String> arguments) {
         if (arguments.size() < 6 || arguments.size() > 8)
             return null;
         try {
@@ -87,7 +87,7 @@ public class Geometric {
         }
     }
 
-    static Circle getCircle(ArrayList<String> arguments) {
+    public Circle getCircle(ArrayList<String> arguments) {
         if (arguments.size() < 3 || arguments.size() > 5)
             return null;
         try {
@@ -106,7 +106,7 @@ public class Geometric {
         }
     }
 
-    static LineSegment getLineSegment(ArrayList<String> arguments) {
+    public LineSegment getLineSegment(ArrayList<String> arguments) {
         if (arguments.size() < 4 || arguments.size() > 5)
             return null;
         try {
@@ -123,15 +123,15 @@ public class Geometric {
         }
     }
 
-    static IShape getMaxAreaShape() {
+    public IShape getMaxAreaShape() {
         return shapes.stream().max(Comparator.comparingDouble(IShape::getArea)).get();
     }
 
-    static IShape getMinPerimeterShape() {
+    public IShape getMinPerimeterShape() {
         return shapes.stream().min(Comparator.comparingDouble(IShape::getPerimeter)).get();
     }
 
-    private static String getShapeInfo(IShape shape) {
+    private String getShapeInfo(IShape shape) {
         String outputString = "area: " + shape.getArea() + "\nperimeter: " + shape.getPerimeter()
                               + "\noutline color: " + Integer.toHexString(shape.getOutlineColor());
         try {
@@ -142,15 +142,16 @@ public class Geometric {
     }
 
     public static void main(String[] args) {
+        geometric geometric = new geometric();
         Scanner inputScanner = new Scanner(System.in);
         String inputString = inputScanner.nextLine();
         while (!inputString.equals("...")) {
-            System.out.print(performCommand(inputString));
+            System.out.print(geometric.performCommand(inputString));
             inputString = inputScanner.nextLine();
         }
-        IShape shapeWithMaxArea = getMaxAreaShape();
-        IShape shapeWithMinPerimeter = getMinPerimeterShape();
-        System.out.println("Max area\n" + getShapeInfo(shapeWithMaxArea) + "\n");
-        System.out.println("Min perimeter\n" + getShapeInfo(shapeWithMinPerimeter));
+        IShape shapeWithMaxArea = geometric.getMaxAreaShape();
+        IShape shapeWithMinPerimeter = geometric.getMinPerimeterShape();
+        System.out.println("Max area\n" + geometric.getShapeInfo(shapeWithMaxArea) + "\n");
+        System.out.println("Min perimeter\n" + geometric.getShapeInfo(shapeWithMinPerimeter));
     }
 }
