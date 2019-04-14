@@ -18,18 +18,24 @@ public class Rectangle implements ISolidShape {
         fillColor = Color.WHITE.getRGB();
     }
 
-    public Rectangle(Point startVertex, double width, double height, String outlineColor, String fillColor) {
+    public Rectangle(Point startVertex, double width, double height, int outlineColor) {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Width and height should be positive");
         this.startVertex = startVertex;
         this.width = width;
         this.height = height;
-        try {
-            this.outlineColor = Integer.parseInt(outlineColor, 16);
-            this.fillColor = Integer.parseInt(fillColor, 16);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("Incorrect value of color");
-        }
+        this.outlineColor = outlineColor;
+        fillColor = Color.WHITE.getRGB();
+    }
+
+    public Rectangle(Point startVertex, double width, double height, int outlineColor, int fillColor) {
+        if (width <= 0 || height <= 0)
+            throw new IllegalArgumentException("Width and height should be positive");
+        this.startVertex = startVertex;
+        this.width = width;
+        this.height = height;
+        this.outlineColor = outlineColor;
+        this.fillColor = fillColor;
     }
 
     @Override

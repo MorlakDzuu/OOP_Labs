@@ -21,7 +21,8 @@ public class TriangleTest {
 
     @Before
     public void init() {
-        triangle = new Triangle(new Point(0, 0), new Point(0, 3), new Point(4, 0), "ff0000", "ff00");
+        triangle = new Triangle(new Point(0, 0), new Point(0, 3), new Point(4, 0),
+                                Integer.parseInt("ff0000", 16), Integer.parseInt("ff00", 16));
     }
 
     public static void assertEqualsDouble(double dob1, double dob2) {
@@ -58,12 +59,6 @@ public class TriangleTest {
         assertInvalidPointArguments(new Point(0, 1), new Point(0, 0), new Point(0, 0));
         assertInvalidPointArguments(new Point(0, 0), new Point(1, 0), new Point(0, 0));
         assertInvalidPointArguments(new Point(0, 0), new Point(0, 0), new Point(0, 1));
-        try {
-            triangle = new Triangle(new Point(1, 0), new Point(0, 0), new Point(0, 1), "hello", "hello");
-            Assert.fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Incorrect value of color", thrown.getMessage());
-        }
     }
 
     @Test

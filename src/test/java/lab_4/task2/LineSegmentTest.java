@@ -10,7 +10,7 @@ public class LineSegmentTest {
 
     @Before
     public void init() {
-        lineSegment = new LineSegment(new Point(0, 2), new Point(5, 2), "ffff00");
+        lineSegment = new LineSegment(new Point(0, 2), new Point(5, 2), Integer.parseInt("ffff00", 16));
     }
 
     public static void assertEqualsDouble(double dob1, double dob2) {
@@ -19,7 +19,7 @@ public class LineSegmentTest {
 
     @Test
     public void getPerimeter() {
-        assertEqualsDouble(5, lineSegment.getLength());
+        assertEqualsDouble(5, lineSegment.getPerimeter());
     }
 
     @Test
@@ -44,12 +44,6 @@ public class LineSegmentTest {
             Assert.fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException thrown) {
             assertEquals("Start point and end point have the same coordinates", thrown.getMessage());
-        }
-        try {
-            lineSegment = new LineSegment(new Point(1, 1), new Point(0, 0), "grege");
-            Assert.fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Incorrect value of color", thrown.getMessage());
         }
     }
 

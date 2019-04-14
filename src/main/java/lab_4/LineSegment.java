@@ -1,3 +1,5 @@
+import java.awt.*;
+
 import static java.lang.Math.sqrt;
 
 public class LineSegment implements IShape {
@@ -11,28 +13,19 @@ public class LineSegment implements IShape {
             throw new IllegalArgumentException("Start point and end point have the same coordinates");
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        outlineColor = 0;
+        outlineColor = Color.BLACK.getRGB();
     }
 
-    public LineSegment(Point startPoint, Point endPoint, String outlineColor) {
+    public LineSegment(Point startPoint, Point endPoint, int outlineColor) {
         if (startPoint.equals(endPoint))
             throw new IllegalArgumentException("Start point and end point have the same coordinates");
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        try {
-            this.outlineColor = Integer.parseInt(outlineColor, 16);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("Incorrect value of color");
-        }
+        this.outlineColor = outlineColor;
     }
 
     @Override
     public double getArea() {
-        return 0;
-    }
-
-    @Override
-    public double getPerimeter() {
         return 0;
     }
 
@@ -47,7 +40,8 @@ public class LineSegment implements IShape {
                 endPoint.getX() + " " + endPoint.getY() + " " + Integer.toHexString(outlineColor);
     }
 
-    public double getLength() {
+    @Override
+    public double getPerimeter() {
         return sqrt(square(endPoint.getX() - startPoint.getX()) + square(endPoint.getY() - startPoint.getY()));
     }
 

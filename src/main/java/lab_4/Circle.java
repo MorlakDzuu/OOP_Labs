@@ -16,17 +16,22 @@ public class Circle implements ISolidShape {
         fillColor = Color.WHITE.getRGB();
     }
 
-    public Circle(Point center, double radius, String outlineColor, String fillColor) {
+    public Circle(Point center, double radius, int outlineColor) {
         if (radius <= 0)
             throw new IllegalArgumentException("Radius should be positive");
         this.center = center;
         this.radius = radius;
-        try {
-            this.outlineColor = Integer.parseInt(outlineColor, 16);
-            this.fillColor = Integer.parseInt(fillColor, 16);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Incorrect value of color");
-        }
+        this.outlineColor = outlineColor;
+        fillColor = Color.WHITE.getRGB();
+    }
+
+    public Circle(Point center, double radius, int outlineColor, int fillColor) {
+        if (radius <= 0)
+            throw new IllegalArgumentException("Radius should be positive");
+        this.center = center;
+        this.radius = radius;
+        this.outlineColor = outlineColor;
+        this.fillColor = fillColor;
     }
 
     @Override

@@ -10,7 +10,7 @@ public class CircleTest {
 
     @Before
     public void init() {
-        circle = new Circle(new Point(0, 0), 5, "ff00", "fff000");
+        circle = new Circle(new Point(0, 0), 5, Integer.parseInt("ff00", 16), Integer.parseInt("fff000", 16));
     }
 
     @Test
@@ -55,35 +55,16 @@ public class CircleTest {
 
     @Test
     public void invalidArgument() {
+        assertInvalidArgument(new Point(0, 0), 0);
+        assertInvalidArgument(new Point(0, 0), -2);
+    }
+
+    private void assertInvalidArgument(Point point, double radius) {
         try {
-            circle = new Circle(new Point(0, 0), 0);
+            circle = new Circle(point, radius);
             Assert.fail("Exception expected");
         } catch (IllegalArgumentException thrown) {
             assertEquals("Radius should be positive", thrown.getMessage());
-        }
-        try {
-            circle = new Circle(new Point(0, 0), -2);
-            Assert.fail("Exception expected");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Radius should be positive", thrown.getMessage());
-        }
-        try {
-            circle = new Circle(new Point(0, 0), 2, "fere", "wfw");
-            Assert.fail("Exception expected");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Incorrect value of color", thrown.getMessage());
-        }
-        try {
-            circle = new Circle(new Point(0, 0), 2, "fere", "ffff");
-            Assert.fail("Exception expected");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Incorrect value of color", thrown.getMessage());
-        }
-        try {
-            circle = new Circle(new Point(0, 0), 2, "ffff", "wfw");
-            Assert.fail("Exception expected");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Incorrect value of color", thrown.getMessage());
         }
     }
 }

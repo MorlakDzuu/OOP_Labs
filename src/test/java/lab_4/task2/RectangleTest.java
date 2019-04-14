@@ -10,31 +10,25 @@ public class RectangleTest {
 
     Rectangle rectangle;
 
+    private void assertInvalidArguments(Point point, double width, double height) {
+        try {
+            rectangle = new Rectangle(point, width, height);
+            Assert.fail("Expected IllegalArgumentException");
+        } catch (IllegalArgumentException thrown) {
+            assertEquals("Width and height should be positive", thrown.getMessage());
+        }
+    }
+
     @Before
     public void init() {
-        rectangle = new Rectangle(new Point(2,12), 10, 100, "ff0000", "00ff00");
+        rectangle = new Rectangle(new Point(2,12), 10, 100,
+                                  Integer.parseInt("ff0000", 16), Integer.parseInt("00ff00", 16));
     }
 
     @Test
     public void illegalArguments() {
-        try {
-            rectangle = new Rectangle(new Point(2,12), 0, 10);
-            Assert.fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Width and height should be positive", thrown.getMessage());
-        }
-        try {
-            rectangle = new Rectangle(new Point(2,12), 10, 0);
-            Assert.fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Width and height should be positive", thrown.getMessage());
-        }
-        try {
-            rectangle = new Rectangle(new Point(2,12), 10, 5, "ftrg", "grve");
-            Assert.fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException thrown) {
-            assertEquals("Incorrect value of color", thrown.getMessage());
-        }
+        assertInvalidArguments(new Point(2,12), 0, 10);
+        assertInvalidArguments(new Point(2,12), 10, 0);
     }
 
     @Test
