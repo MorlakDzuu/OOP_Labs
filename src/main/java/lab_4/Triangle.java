@@ -96,6 +96,6 @@ public class Triangle implements ISolidShape, ICanvasDrawable {
         canvas.drawLine(vertex1, vertex2, outlineColor);
         canvas.drawLine(vertex2, vertex3, outlineColor);
         canvas.drawLine(vertex3, vertex1, outlineColor);
-        canvas.fillPolygon(new ArrayList<>(Arrays.asList(vertex1, vertex2, vertex3)), 3);
+        canvas.fillPolygon(new ArrayList<>(Arrays.asList(vertex1, vertex2, vertex3)), fillColor);
     }
 }

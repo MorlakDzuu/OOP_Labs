@@ -3,6 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CircleTest {
 
@@ -57,6 +59,20 @@ public class CircleTest {
     public void invalidArgument() {
         assertInvalidArgument(new Point(0, 0), 0);
         assertInvalidArgument(new Point(0, 0), -2);
+    }
+
+    @Test
+    public void draw() {
+        Canvas canvasMock = mock(Canvas.class);
+        Point center = new Point(0, 0);
+        double radius = 10;
+        int outlineColor = 0xff;
+        int fillColor = 0xab;
+        Circle circle = new Circle(center, radius, outlineColor, fillColor);
+        circle.draw(canvasMock);
+
+        verify(canvasMock).drawCircle(center, radius, outlineColor);
+        verify(canvasMock).fillCircle(center, radius, fillColor);
     }
 
     private void assertInvalidArgument(Point point, double radius) {

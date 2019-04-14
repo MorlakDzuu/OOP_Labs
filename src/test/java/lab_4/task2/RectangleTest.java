@@ -3,8 +3,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class RectangleTest {
 
@@ -74,5 +78,26 @@ public class RectangleTest {
     @Test
     public void getLeftTop() {
         assertEquals("2.0 12.0", rectangle.getLeftTop().toString());
+    }
+
+    @Test
+    public void draw() {
+        Canvas canvasMock = mock(Canvas.class);
+        Point leftTopPoint = new Point(0, 0);
+        Point rightTopPoint = new Point(10, 0);
+        Point rightBottomPoint = new Point(10, 100);
+        Point leftBottomPoint = new Point(0, 100);
+        double width = 10;
+        double height = 100;
+        int outlineColor = 0xf3;
+        int fillColor = 0xfab;
+        Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
+        rectangle.draw(canvasMock);
+
+        verify(canvasMock).drawLine(leftTopPoint, rightTopPoint, outlineColor);
+        verify(canvasMock).drawLine(rightTopPoint, rightBottomPoint, outlineColor);
+        verify(canvasMock).drawLine(rightBottomPoint, leftBottomPoint, outlineColor);
+        verify(canvasMock).drawLine(leftBottomPoint, leftTopPoint, outlineColor);
+        verify(canvasMock).fillPolygon(new ArrayList<>(Arrays.asList(leftTopPoint, leftBottomPoint, rightBottomPoint, rightTopPoint)), fillColor);
     }
 }

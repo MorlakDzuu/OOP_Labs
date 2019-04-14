@@ -74,6 +74,6 @@ public class Circle implements ISolidShape, ICanvasDrawable {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawCircle(center, radius, outlineColor);
-        canvas.fillCircle(center, radius, outlineColor);
+        canvas.fillCircle(center, radius, fillColor);
     }
 }

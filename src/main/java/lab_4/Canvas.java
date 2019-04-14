@@ -9,6 +9,9 @@ public class Canvas implements ICanvas {
         this.graphics = graphics;
     }
 
+    public Canvas() {
+    }
+
     @Override
     public void drawLine(Point from, Point to, int lineColor) {
         graphics.setColor(new Color(lineColor));

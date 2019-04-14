@@ -3,8 +3,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class TriangleTest {
 
@@ -66,5 +70,22 @@ public class TriangleTest {
         assertEquals("0.0 0.0", triangle.getVertex1().toString());
         assertEquals("0.0 3.0", triangle.getVertex2().toString());
         assertEquals("4.0 0.0", triangle.getVertex3().toString());
+    }
+
+    @Test
+    public void draw() {
+        Canvas canvasMock = mock(Canvas.class);
+        Point vertex1 = new Point(0, 0);
+        Point vertex2 = new Point(4, 0);
+        Point vertex3 = new Point(0, 3);
+        int outlineColor = 0xff;
+        int fillColor = 0xfff000;
+        Triangle triangle = new Triangle(vertex1, vertex2, vertex3, outlineColor, fillColor);
+        triangle.draw(canvasMock);
+
+        verify(canvasMock).drawLine(vertex1, vertex2, outlineColor);
+        verify(canvasMock).drawLine(vertex2, vertex3, outlineColor);
+        verify(canvasMock).drawLine(vertex3, vertex1, outlineColor);
+        verify(canvasMock).fillPolygon(new ArrayList<>(Arrays.asList(vertex1, vertex2, vertex3)), fillColor);
     }
 }

@@ -3,6 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class LineSegmentTest {
 
@@ -51,5 +53,17 @@ public class LineSegmentTest {
     public void getPoint() {
         assertEquals("0.0 2.0", lineSegment.getStartPoint().toString());
         assertEquals("5.0 2.0", lineSegment.getEndPoint().toString());
+    }
+
+    @Test
+    public void draw() {
+        Canvas canvasMock = mock(Canvas.class);
+        Point startPoint = new Point(0, 0);
+        Point endPoint = new Point(10, 10);
+        int outlineColor = 0xff;
+        LineSegment lineSegment = new LineSegment(startPoint, endPoint, outlineColor);
+        lineSegment.draw(canvasMock);
+
+        verify(canvasMock).drawLine(startPoint, endPoint, outlineColor);
     }
 }
