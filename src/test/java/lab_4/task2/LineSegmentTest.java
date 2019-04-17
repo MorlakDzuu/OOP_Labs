@@ -1,3 +1,6 @@
+import Classes.Canvas;
+import Classes.LineSegment;
+import Classes.Point;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

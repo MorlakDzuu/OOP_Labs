@@ -1,3 +1,5 @@
+package Interfaces;
+import Classes.Point;
 import java.util.ArrayList;
 
 public interface ICanvas {

@@ -1,3 +1,5 @@
+import Classes.*;
+import Interfaces.IShape;
 import org.junit.Assert;
 import org.junit.Test;
 

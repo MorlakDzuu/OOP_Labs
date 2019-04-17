@@ -1,3 +1,8 @@
+package Classes;
+
+import Interfaces.ICanvasDrawable;
+import Interfaces.IShape;
+
 import java.awt.*;
 
 import static java.lang.Math.sqrt;

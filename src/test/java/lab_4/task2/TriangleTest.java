@@ -1,3 +1,5 @@
+import Classes.Point;
+import Classes.Triangle;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +16,7 @@ public class TriangleTest {
 
     private Triangle triangle;
 
-    private void assertInvalidPointArguments(Point point1, Point point2, Point point3) {
+    private void assertInvalidPointArguments(Classes.Point point1, Classes.Point point2, Classes.Point point3) {
         try {
             triangle = new Triangle(point1, point2, point3);
             Assert.fail("Expected IllegalArgumentException");
@@ -25,7 +27,7 @@ public class TriangleTest {
 
     @Before
     public void init() {
-        triangle = new Triangle(new Point(0, 0), new Point(0, 3), new Point(4, 0),
+        triangle = new Triangle(new Classes.Point(0, 0), new Classes.Point(0, 3), new Classes.Point(4, 0),
                                 Integer.parseInt("ff0000", 16), Integer.parseInt("ff00", 16));
     }
 
@@ -47,7 +49,7 @@ public class TriangleTest {
     public void getColor() {
         assertEquals(Integer.parseInt("ff0000", 16), triangle.getOutlineColor());
         assertEquals(Integer.parseInt("ff00", 16), triangle.getFillColor());
-        triangle = new Triangle(new Point(0, 0), new Point(0, 1), new Point(2, 3));
+        triangle = new Triangle(new Classes.Point(0, 0), new Classes.Point(0, 1), new Classes.Point(2, 3));
         assertEquals(Color.BLACK.getRGB(), triangle.getOutlineColor());
         assertEquals(Color.WHITE.getRGB(), triangle.getFillColor());
     }
@@ -59,10 +61,10 @@ public class TriangleTest {
 
     @Test
     public void invalidArgument() {
-        assertInvalidPointArguments(new Point(0, 0), new Point(0, 0), new Point(0, 0));
-        assertInvalidPointArguments(new Point(0, 1), new Point(0, 0), new Point(0, 0));
-        assertInvalidPointArguments(new Point(0, 0), new Point(1, 0), new Point(0, 0));
-        assertInvalidPointArguments(new Point(0, 0), new Point(0, 0), new Point(0, 1));
+        assertInvalidPointArguments(new Classes.Point(0, 0), new Classes.Point(0, 0), new Classes.Point(0, 0));
+        assertInvalidPointArguments(new Classes.Point(0, 1), new Classes.Point(0, 0), new Classes.Point(0, 0));
+        assertInvalidPointArguments(new Classes.Point(0, 0), new Classes.Point(1, 0), new Classes.Point(0, 0));
+        assertInvalidPointArguments(new Classes.Point(0, 0), new Classes.Point(0, 0), new Classes.Point(0, 1));
     }
 
     @Test
@@ -74,10 +76,10 @@ public class TriangleTest {
 
     @Test
     public void draw() {
-        Canvas canvasMock = mock(Canvas.class);
-        Point vertex1 = new Point(0, 0);
-        Point vertex2 = new Point(4, 0);
-        Point vertex3 = new Point(0, 3);
+        Classes.Canvas canvasMock = mock(Classes.Canvas.class);
+        Classes.Point vertex1 = new Classes.Point(0, 0);
+        Classes.Point vertex2 = new Classes.Point(4, 0);
+        Classes.Point vertex3 = new Point(0, 3);
         int outlineColor = 0xff;
         int fillColor = 0xfff000;
         Triangle triangle = new Triangle(vertex1, vertex2, vertex3, outlineColor, fillColor);

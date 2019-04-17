@@ -1,3 +1,4 @@
+import Classes.Rectangle;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,17 +8,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class RectangleTest {
 
-    private Rectangle rectangle;
+    private Classes.Rectangle rectangle;
 
-    private void assertInvalidArguments(Point point, double width, double height) {
+    private void assertInvalidArguments(Classes.Point point, double width, double height) {
         try {
-            rectangle = new Rectangle(point, width, height);
+            rectangle = new Classes.Rectangle(point, width, height);
             Assert.fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException thrown) {
             assertEquals("Width and height should be positive", thrown.getMessage());
@@ -26,14 +26,14 @@ public class RectangleTest {
 
     @Before
     public void init() {
-        rectangle = new Rectangle(new Point(2,12), 10, 100,
+        rectangle = new Classes.Rectangle(new Classes.Point(2,12), 10, 100,
                                   Integer.parseInt("ff0000", 16), Integer.parseInt("00ff00", 16));
     }
 
     @Test
     public void illegalArguments() {
-        assertInvalidArguments(new Point(2,12), 0, 10);
-        assertInvalidArguments(new Point(2,12), 10, 0);
+        assertInvalidArguments(new Classes.Point(2,12), 0, 10);
+        assertInvalidArguments(new Classes.Point(2,12), 10, 0);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RectangleTest {
     public void getColor() {
         assertEquals(Integer.parseInt("ff0000", 16), rectangle.getOutlineColor());
         assertEquals(Integer.parseInt("00ff00", 16), rectangle.getFillColor());
-        rectangle = new Rectangle(new Point(0, 0), 10, 10);
+        rectangle = new Classes.Rectangle(new Classes.Point(0, 0), 10, 10);
         assertEquals(Color.BLACK.getRGB(), rectangle.getOutlineColor());
         assertEquals(Color.WHITE.getRGB(), rectangle.getFillColor());
     }
@@ -83,16 +83,16 @@ public class RectangleTest {
 
     @Test
     public void draw() {
-        Canvas canvasMock = mock(Canvas.class);
-        Point leftTopPoint = new Point(0, 0);
-        Point rightTopPoint = new Point(10, 0);
-        Point rightBottomPoint = new Point(10, 100);
-        Point leftBottomPoint = new Point(0, 100);
+        Classes.Canvas canvasMock = mock(Classes.Canvas.class);
+        Classes.Point leftTopPoint = new Classes.Point(0, 0);
+        Classes.Point rightTopPoint = new Classes.Point(10, 0);
+        Classes.Point rightBottomPoint = new Classes.Point(10, 100);
+        Classes.Point leftBottomPoint = new Classes.Point(0, 100);
         double width = 10;
         double height = 100;
         int outlineColor = 0xff;
         int fillColor = 0xfab;
-        Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
+        Classes.Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
         rectangle.draw(canvasMock);
 
         verify(canvasMock).drawLine(leftTopPoint, rightTopPoint, outlineColor);

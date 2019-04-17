@@ -1,3 +1,6 @@
+import Classes.Canvas;
+import Classes.Circle;
+import Classes.Point;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

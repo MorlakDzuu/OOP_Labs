@@ -1,3 +1,7 @@
+package Classes;
+
+import Interfaces.ICanvas;
+
 import java.awt.*;
 import java.util.ArrayList;
 

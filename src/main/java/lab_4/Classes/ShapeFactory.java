@@ -1,5 +1,9 @@
+package Classes;
+
 import java.util.ArrayList;
 import Exception.*;
+import Interfaces.IShape;
+import Interfaces.IShapeFactory;
 
 public class ShapeFactory implements IShapeFactory {
 

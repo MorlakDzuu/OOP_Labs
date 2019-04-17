@@ -1,10 +1,20 @@
+package Classes;
+
+import Exception.IllegalCircleArguments;
+import Exception.IllegalLineArguments;
+import Exception.IllegalRectangleArguments;
+import Exception.IllegalTriangleArguments;
+import Interfaces.ICanvasDrawable;
+import Interfaces.IShape;
+import Interfaces.ISolidShape;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
-import Exception.*;
+
 public class Geometric {
 
     private ArrayList<IShape> shapes = new ArrayList<>();

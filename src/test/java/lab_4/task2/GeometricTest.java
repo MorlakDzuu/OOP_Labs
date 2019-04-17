@@ -1,3 +1,7 @@
+import Classes.Geometric;
+import Classes.LineSegment;
+import Classes.Point;
+import Classes.Triangle;
 import org.junit.Before;
 import org.junit.Test;
 

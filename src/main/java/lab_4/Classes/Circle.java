@@ -1,3 +1,8 @@
+package Classes;
+
+import Interfaces.ICanvasDrawable;
+import Interfaces.ISolidShape;
+
 import java.awt.*;
 
 public class Circle implements ISolidShape, ICanvasDrawable {
