@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
-
+import Exception.*;
 public class Geometric {
 
     private ArrayList<IShape> shapes = new ArrayList<>();
@@ -13,115 +13,27 @@ public class Geometric {
         ArrayList<String> commandElements = new ArrayList<>(Arrays.asList(command.split(" ")));
         if (commandElements.size() <= 1)
             return "Invalid string\n";
-        String shape = commandElements.get(0);
+        String shapeName = commandElements.get(0);
         commandElements.remove(0);
-        switch (shape) {
-            case "rectangle":
-                Rectangle rectangle = getRectangle(commandElements);
-                if (rectangle != null)
-                    shapes.add(rectangle);
-                else
-                    return "Usage: rectangle <left vertex coordinate x> <left vertex coordinate y> <width> <height> <outline color in hex string> <fill color in hex string>\n";
-                break;
-            case "triangle":
-                Triangle triangle = getTriangle(commandElements);
-                if (triangle != null)
-                    shapes.add(triangle);
-                else
-                    return "Usage: triangle <1 vertex coordinate x> <1 vertex coordinate y> <2 vertex coordinate x> <2 vertex coordinate y> <3 vertex coordinate x> <3 vertex coordinate y> " +
-                            "<outline color in hex string> <fill color in hex string>\n";
-                break;
-            case "circle":
-                Circle circle = getCircle(commandElements);
-                if (circle != null)
-                    shapes.add(circle);
-                else
-                    return "Usage: circle <center vertex coordinate x> <center vertex coordinate y> <radius> <outline color in hex string> <fill color in hex string>\n";
-                break;
-            case "line":
-                LineSegment lineSegment = getLineSegment(commandElements);
-                if (lineSegment != null)
-                    shapes.add(lineSegment);
-                else
-                    return "Usage: line <start point coordinate x> <start point coordinate y> <end point coordinate x> <end point coordinate y> <outline color in hex string>\n";
-                break;
-        }
-        return "";
+        ShapeFactory shapeFactory = new ShapeFactory(shapeName, commandElements);
+        return addShapeAndGetMessage(shapeFactory);
     }
 
-    public Rectangle getRectangle(ArrayList<String> arguments) {
-        if (arguments.size() < 4 || arguments.size() > 6)
-            return null;
+    private String addShapeAndGetMessage(ShapeFactory shapeFactory) {
         try {
-            Rectangle rectangle;
-            Point point = new Point(Double.valueOf(arguments.get(0)), Double.valueOf(arguments.get(1)));
-            double width = Double.valueOf(arguments.get(2));
-            double height = Double.valueOf(arguments.get(3));
-            if (arguments.size() == 4)
-                rectangle = new Rectangle(point, width, height);
-            else if (arguments.size() == 5)
-                rectangle = new Rectangle(point, width, height, Integer.parseInt(arguments.get(4), 16));
-            else
-                rectangle = new Rectangle(point, width, height, Integer.parseInt(arguments.get(4), 16), Integer.parseInt(arguments.get(5), 16));
-            return rectangle;
+            shapes.add(shapeFactory.makeShape());
+            return "";
+        } catch (IllegalRectangleArguments e) {
+            return "Usage: rectangle <left vertex coordinate x> <left vertex coordinate y> <width> <height> <outline color in hex string> <fill color in hex string>\n";
+        } catch (IllegalTriangleArguments e) {
+            return "Usage: triangle <1 vertex coordinate x> <1 vertex coordinate y> <2 vertex coordinate x> <2 vertex coordinate y> <3 vertex coordinate x> <3 vertex coordinate y> " +
+                    "<outline color in hex string> <fill color in hex string>\n";
+        } catch (IllegalCircleArguments e) {
+            return "Usage: circle <center vertex coordinate x> <center vertex coordinate y> <radius> <outline color in hex string> <fill color in hex string>\n";
+        } catch (IllegalLineArguments e) {
+            return "Usage: line <start point coordinate x> <start point coordinate y> <end point coordinate x> <end point coordinate y> <outline color in hex string>\n";
         } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    public Triangle getTriangle(ArrayList<String> arguments) {
-        if (arguments.size() < 6 || arguments.size() > 8)
-            return null;
-        try {
-            Triangle triangle;
-            Point vertex1 = new Point(Double.valueOf(arguments.get(0)), Double.valueOf(arguments.get(1)));
-            Point vertex2 = new Point(Double.valueOf(arguments.get(2)), Double.valueOf(arguments.get(3)));
-            Point vertex3 = new Point(Double.valueOf(arguments.get(4)), Double.valueOf(arguments.get(5)));
-            if (arguments.size() == 6)
-                triangle = new Triangle(vertex1, vertex2, vertex3);
-            else if (arguments.size() == 7)
-                triangle = new Triangle(vertex1, vertex2, vertex3, Integer.parseInt(arguments.get(6), 16));
-            else
-                triangle = new Triangle(vertex1, vertex2, vertex3, Integer.parseInt(arguments.get(6), 16), Integer.parseInt(arguments.get(7), 16));
-            return triangle;
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    public Circle getCircle(ArrayList<String> arguments) {
-        if (arguments.size() < 3 || arguments.size() > 5)
-            return null;
-        try {
-            Circle circle;
-            Point point = new Point(Double.valueOf(arguments.get(0)), Double.valueOf(arguments.get(1)));
-            double radius = Double.valueOf(arguments.get(2));
-            if (arguments.size() == 3)
-                circle = new Circle(point, radius);
-            else if (arguments.size() == 4)
-                circle = new Circle(point, radius, Integer.parseInt(arguments.get(3), 16));
-            else
-                circle = new Circle(point, radius, Integer.parseInt(arguments.get(3), 16), Integer.parseInt(arguments.get(4), 16));
-            return circle;
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    public LineSegment getLineSegment(ArrayList<String> arguments) {
-        if (arguments.size() < 4 || arguments.size() > 5)
-            return null;
-        try {
-            LineSegment lineSegment;
-            Point startPoint = new Point(Double.valueOf(arguments.get(0)), Double.valueOf(arguments.get(1)));
-            Point endPoint = new Point(Double.valueOf(arguments.get(2)), Double.valueOf(arguments.get(3)));
-            if (arguments.size() == 4)
-                lineSegment = new LineSegment(startPoint, endPoint);
-            else
-                lineSegment = new LineSegment(startPoint, endPoint, Integer.parseInt(arguments.get(4), 16));
-            return lineSegment;
-        } catch (IllegalArgumentException e) {
-            return null;
+            return "There is no such shape's name\n";
         }
     }
 
@@ -144,7 +56,9 @@ public class Geometric {
     }
 
     private void drawShapes() {
-        JFrame jFrame = new JFrame("Пример диалогового окна"){
+        if (shapes.size() == 0)
+            return;
+        JFrame jFrame = new JFrame("Frame"){
             public void paint(Graphics graphics) {
                 super.paint(graphics);
                 Canvas canvas = new Canvas(graphics);
@@ -158,20 +72,45 @@ public class Geometric {
         jFrame.setVisible(true);
     }
 
+    public void printShapeWithMaxArea() {
+        if (shapes.size() > 0) {
+            IShape shapeWithMaxArea = getMaxAreaShape();
+            System.out.println("Max area\n" + getShapeInfo(shapeWithMaxArea) + "\n");
+        }
+    }
+
+    public void printShapeWithMinPerimeter() {
+        if (shapes.size() > 0) {
+            IShape shapeWithMinPerimeter = getMinPerimeterShape();
+            System.out.println("Min perimeter\n" + getShapeInfo(shapeWithMinPerimeter));
+        }
+    }
+
+    public void processingInput(Scanner inputScanner) {
+        String inputString = inputScanner.nextLine();
+        while (!inputString.equals("...")) {
+            System.out.print(performCommand(inputString));
+            inputString = inputScanner.nextLine();
+        }
+    }
+
     public static void main(String[] args) {
         Geometric geometric = new Geometric();
         Scanner inputScanner = new Scanner(System.in);
-        String inputString = inputScanner.nextLine();
-        while (!inputString.equals("...")) {
-            System.out.print(geometric.performCommand(inputString));
-            inputString = inputScanner.nextLine();
-        }
-        if (geometric.shapes.size() > 0) {
-            IShape shapeWithMaxArea = geometric.getMaxAreaShape();
-            IShape shapeWithMinPerimeter = geometric.getMinPerimeterShape();
-            System.out.println("Max area\n" + geometric.getShapeInfo(shapeWithMaxArea) + "\n");
-            System.out.println("Min perimeter\n" + geometric.getShapeInfo(shapeWithMinPerimeter));
-            geometric.drawShapes();
-        }
+        geometric.processingInput(inputScanner);
+        geometric.printShapeWithMaxArea();
+        geometric.printShapeWithMinPerimeter();
+        geometric.drawShapes();
     }
 }
+/*
+rectangle 50 100 400 300 ff ff00
+triangle 450 100 450 400 790 250 ff ffabf
+circle 150 150 200 ff abfff
+circle 175 175 150 123 bb33
+line 450 80 790 230
+line 450 420 790 270
+line 450 80 450 100
+line 450 420 450 400
+line 790 230 790 270
+*/

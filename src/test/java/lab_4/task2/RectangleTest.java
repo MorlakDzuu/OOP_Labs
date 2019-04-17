@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -89,7 +90,7 @@ public class RectangleTest {
         Point leftBottomPoint = new Point(0, 100);
         double width = 10;
         double height = 100;
-        int outlineColor = 0xf3;
+        int outlineColor = 0xff;
         int fillColor = 0xfab;
         Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
         rectangle.draw(canvasMock);
