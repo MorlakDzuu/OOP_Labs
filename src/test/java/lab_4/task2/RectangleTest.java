@@ -1,3 +1,5 @@
+import Classes.Canvas;
+import Classes.Point;
 import Classes.Rectangle;
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,16 +85,16 @@ public class RectangleTest {
 
     @Test
     public void draw() {
-        Classes.Canvas canvasMock = mock(Classes.Canvas.class);
-        Classes.Point leftTopPoint = new Classes.Point(0, 0);
+        Canvas canvasMock = mock(Canvas.class);
+        Point leftTopPoint = new Classes.Point(0, 0);
         double width = 10;
         double height = 100;
         int outlineColor = 0xff;
         int fillColor = 0xfab;
-        Classes.Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
-        Classes.Point rightTopPoint = rectangle.getRightTopPoint();
-        Classes.Point rightBottomPoint = rectangle.getRightBottom();
-        Classes.Point leftBottomPoint = rectangle.getLeftBottomPoint();
+        Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
+        Point rightTopPoint = rectangle.getRightTopPoint();
+        Point rightBottomPoint = rectangle.getRightBottom();
+        Point leftBottomPoint = rectangle.getLeftBottomPoint();
         rectangle.draw(canvasMock);
 
         verify(canvasMock).drawLine(leftTopPoint, rightTopPoint, outlineColor);

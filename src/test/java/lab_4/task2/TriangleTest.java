@@ -1,3 +1,4 @@
+import Classes.Canvas;
 import Classes.Point;
 import Classes.Triangle;
 import org.junit.Assert;
@@ -76,10 +77,10 @@ public class TriangleTest {
 
     @Test
     public void draw() {
-        Classes.Canvas canvasMock = mock(Classes.Canvas.class);
-        Classes.Point vertex1 = new Classes.Point(0, 0);
-        Classes.Point vertex2 = new Classes.Point(4, 0);
-        Classes.Point vertex3 = new Point(0, 3);
+        Canvas canvasMock = mock(Canvas.class);
+        Point vertex1 = new Point(0, 0);
+        Point vertex2 = new Point(4, 0);
+        Point vertex3 = new Point(0, 3);
         int outlineColor = 0xff;
         int fillColor = 0xfff000;
         Triangle triangle = new Triangle(vertex1, vertex2, vertex3, outlineColor, fillColor);
