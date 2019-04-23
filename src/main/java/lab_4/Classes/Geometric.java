@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Geometric {
 
-    ShapesArray shapesArray = new ShapesArray();
+    private ShapesArray shapesArray = new ShapesArray();
 
     public String createShape(String command) {
         ArrayList<String> commandElements = new ArrayList<>(Arrays.asList(command.split(" ")));
