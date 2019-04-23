@@ -59,9 +59,8 @@ public class ShapesArray {
     public String getShapeInfo(IShape shape) {
         String outputString = "area: " + shape.getArea() + "\nperimeter: " + shape.getPerimeter()
                 + "\noutline color: " + Integer.toHexString(shape.getOutlineColor());
-        try {
+        if (shape instanceof ISolidShape)
             outputString += "\nfill color: " + Integer.toHexString(((ISolidShape) shape).getFillColor());
-        } catch (ClassCastException ignored) {}
         outputString += "\n" + shape.toString();
         return outputString;
     }
