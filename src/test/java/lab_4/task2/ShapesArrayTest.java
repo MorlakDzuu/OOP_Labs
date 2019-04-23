@@ -50,5 +50,10 @@ public class ShapesArrayTest {
                         "fill color: ff00\n" +
                         "rectangle 50.0 100.0 400.0 300.0 ff ff00";
         assertEquals(string, shapesArray.getShapeInfo(new Rectangle(new Point(50, 100), 400, 300, Integer.parseInt("ff", 16), Integer.parseInt("ff00", 16))));
+        string = "area: 0.0\n" +
+                "perimeter: 371.6180835212409\n" +
+                "outline color: ff000000\n" +
+                "line 450.0 80.0 790.0 230.0 ff000000";
+        assertEquals(string, shapesArray.getShapeInfo(new LineSegment(new Point(450, 80), new Point(790, 230))));
     }
 }
