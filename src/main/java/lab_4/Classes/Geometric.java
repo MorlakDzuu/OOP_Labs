@@ -8,7 +8,7 @@ public class Geometric {
 
     private ShapesArray shapesArray = new ShapesArray();
 
-    public String createShape(String command) {
+    public String performCommand(String command) {
         ArrayList<String> commandElements = new ArrayList<>(Arrays.asList(command.split(" ")));
         if (commandElements.size() <= 1)
             return "Invalid string\n";
@@ -22,7 +22,7 @@ public class Geometric {
     public void processInput(Scanner inputScanner) {
         String inputString = inputScanner.nextLine();
         while (!inputString.equals("...")) {
-            System.out.print(createShape(inputString));
+            System.out.print(performCommand(inputString));
             inputString = inputScanner.nextLine();
         }
     }
