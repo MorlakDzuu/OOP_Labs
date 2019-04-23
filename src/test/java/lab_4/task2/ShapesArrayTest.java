@@ -1,5 +1,6 @@
 import Classes.*;
 import Interfaces.IShape;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,12 +49,33 @@ public class ShapesArrayTest {
                         "perimeter: 1400.0\n" +
                         "outline color: ff\n" +
                         "fill color: ff00\n" +
-                        "rectangle 50.0 100.0 400.0 300.0 ff ff00";
+                        "rectangle 50.0 100.0 400.0 " +
+                "300.0 ff ff00";
         assertEquals(string, shapesArray.getShapeInfo(new Rectangle(new Point(50, 100), 400, 300, Integer.parseInt("ff", 16), Integer.parseInt("ff00", 16))));
         string = "area: 0.0\n" +
                 "perimeter: 371.6180835212409\n" +
                 "outline color: ff000000\n" +
                 "line 450.0 80.0 790.0 230.0 ff000000";
         assertEquals(string, shapesArray.getShapeInfo(new LineSegment(new Point(450, 80), new Point(790, 230))));
+    }
+
+    public void assertException(String shapeName, ArrayList<String> shapeArguments, String expectedMessage) {
+        ShapeFactory shapeFactory = new ShapeFactory(shapeName, shapeArguments);
+        String actualMessage = shapesArray.addShapeAndGetMessage(shapeFactory);
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void addShapeAndGetMessage() {
+        assertException("rec", new ArrayList<>(), "There is no such shape's name\n");
+        assertException("rectangle", new ArrayList<>(),
+                "Usage: rectangle <left vertex coordinate x> <left vertex coordinate y> <width> <height> <outline color in hex string> <fill color in hex string>\n");
+        assertException("triangle", new ArrayList<>(),
+                "Usage: triangle <1 vertex coordinate x> <1 vertex coordinate y> <2 vertex coordinate x> <2 vertex coordinate y> <3 vertex coordinate x> <3 vertex coordinate y> " +
+                        "<outline color in hex string> <fill color in hex string>\n");
+        assertException("line", new ArrayList<>(),
+                "Usage: line <start point coordinate x> <start point coordinate y> <end point coordinate x> <end point coordinate y> <outline color in hex string>\n");
+        assertException("circle", new ArrayList<>(),
+                "Usage: circle <center vertex coordinate x> <center vertex coordinate y> <radius> <outline color in hex string> <fill color in hex string>\n");
     }
 }
