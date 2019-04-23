@@ -85,20 +85,20 @@ public class RectangleTest {
     public void draw() {
         Classes.Canvas canvasMock = mock(Classes.Canvas.class);
         Classes.Point leftTopPoint = new Classes.Point(0, 0);
-        Classes.Point rightTopPoint = new Classes.Point(10, 0);
-        Classes.Point rightBottomPoint = new Classes.Point(10, 100);
-        Classes.Point leftBottomPoint = new Classes.Point(0, 100);
         double width = 10;
         double height = 100;
         int outlineColor = 0xff;
         int fillColor = 0xfab;
         Classes.Rectangle rectangle = new Rectangle(leftTopPoint, width, height, outlineColor, fillColor);
+        Classes.Point rightTopPoint = rectangle.getRightTopPoint();
+        Classes.Point rightBottomPoint = rectangle.getRightBottom();
+        Classes.Point leftBottomPoint = rectangle.getLeftBottomPoint();
         rectangle.draw(canvasMock);
 
         verify(canvasMock).drawLine(leftTopPoint, rightTopPoint, outlineColor);
         verify(canvasMock).drawLine(rightTopPoint, rightBottomPoint, outlineColor);
         verify(canvasMock).drawLine(rightBottomPoint, leftBottomPoint, outlineColor);
         verify(canvasMock).drawLine(leftBottomPoint, leftTopPoint, outlineColor);
-        verify(canvasMock).fillPolygon(new ArrayList<>(Arrays.asList(leftTopPoint, leftBottomPoint, rightBottomPoint, rightTopPoint)), fillColor);
+        verify(canvasMock).fillPolygon(new ArrayList<>(Arrays.asList(leftTopPoint, rightTopPoint, rightBottomPoint, leftBottomPoint)), fillColor);
     }
 }

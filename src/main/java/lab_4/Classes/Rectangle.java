@@ -11,6 +11,9 @@ import java.util.Arrays;
 public class Rectangle implements ISolidShape, ICanvasDrawable {
 
     private Point startVertex;
+    private Point rightBottomVertex;
+    private Point rightTopPoint;
+    private Point leftBottomPoint;
     private double width;
     private double height;
     private int outlineColor;
@@ -20,6 +23,9 @@ public class Rectangle implements ISolidShape, ICanvasDrawable {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Width and height should be positive");
         this.startVertex = startVertex;
+        this.rightBottomVertex = new Point(startVertex.getX() + width, startVertex.getY() + height);
+        this.rightTopPoint = new Point(startVertex.getX() + width, startVertex.getY());
+        this.leftBottomPoint = new Point(startVertex.getX(), startVertex.getY() + height);
         this.width = width;
         this.height = height;
         outlineColor = Color.BLACK.getRGB();
@@ -29,6 +35,9 @@ public class Rectangle implements ISolidShape, ICanvasDrawable {
     public Rectangle(Point startVertex, double width, double height, int outlineColor) {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Width and height should be positive");
+        this.rightBottomVertex = new Point(startVertex.getX() + width, startVertex.getY() + height);
+        this.rightTopPoint = new Point(startVertex.getX() + width, startVertex.getY());
+        this.leftBottomPoint = new Point(startVertex.getX(), startVertex.getY() + height);
         this.startVertex = startVertex;
         this.width = width;
         this.height = height;
@@ -39,6 +48,9 @@ public class Rectangle implements ISolidShape, ICanvasDrawable {
     public Rectangle(Point startVertex, double width, double height, int outlineColor, int fillColor) {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Width and height should be positive");
+        this.rightBottomVertex = new Point(startVertex.getX() + width, startVertex.getY() + height);
+        this.rightTopPoint = new Point(startVertex.getX() + width, startVertex.getY());
+        this.leftBottomPoint = new Point(startVertex.getX(), startVertex.getY() + height);
         this.startVertex = startVertex;
         this.width = width;
         this.height = height;
@@ -78,7 +90,15 @@ public class Rectangle implements ISolidShape, ICanvasDrawable {
     }
 
     public Point getRightBottom() {
-        return new Point(startVertex.getX() + width, startVertex.getY() + height);
+        return rightBottomVertex;
+    }
+
+    public Point getRightTopPoint() {
+        return rightTopPoint;
+    }
+
+    public Point getLeftBottomPoint() {
+        return leftBottomPoint;
     }
 
     public double getWidth() {
@@ -91,8 +111,6 @@ public class Rectangle implements ISolidShape, ICanvasDrawable {
 
     @Override
     public void draw(ICanvas canvas) {
-        Point rightTopPoint = new Point(startVertex.getX() + width, startVertex.getY());
-        Point leftBottomPoint = new Point(startVertex.getX(), startVertex.getY() + height);
         canvas.drawLine(startVertex, rightTopPoint, outlineColor);
         canvas.drawLine(rightTopPoint, getRightBottom(), outlineColor);
         canvas.drawLine(getRightBottom(), leftBottomPoint, outlineColor);
