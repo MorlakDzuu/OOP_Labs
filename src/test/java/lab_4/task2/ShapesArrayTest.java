@@ -1,5 +1,4 @@
-package Classes;
-
+import Classes.*;
 import Interfaces.IShape;
 import org.junit.Before;
 import org.junit.Test;
