@@ -1,5 +1,6 @@
 package Classes;
 
+import Interfaces.ICanvas;
 import Interfaces.ICanvasDrawable;
 import Interfaces.IShape;
 
@@ -63,7 +64,7 @@ public class LineSegment implements IShape, ICanvasDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(ICanvas canvas) {
         canvas.drawLine(startPoint, endPoint, outlineColor);
     }
 }

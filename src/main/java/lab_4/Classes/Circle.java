@@ -1,5 +1,6 @@
 package Classes;
 
+import Interfaces.ICanvas;
 import Interfaces.ICanvasDrawable;
 import Interfaces.ISolidShape;
 
@@ -51,7 +52,7 @@ public class Circle implements ISolidShape, ICanvasDrawable {
 
     @Override
     public double getPerimeter() {
-        return 0;
+        return 2 * Math.PI * radius;
     }
 
     @Override
@@ -77,7 +78,7 @@ public class Circle implements ISolidShape, ICanvasDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(ICanvas canvas) {
         canvas.drawCircle(center, radius, outlineColor);
         canvas.fillCircle(center, radius, fillColor);
     }

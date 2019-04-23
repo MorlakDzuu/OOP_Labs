@@ -1,5 +1,6 @@
 package Classes;
 
+import Interfaces.ICanvas;
 import Interfaces.ICanvasDrawable;
 import Interfaces.ISolidShape;
 
@@ -89,7 +90,7 @@ public class Rectangle implements ISolidShape, ICanvasDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(ICanvas canvas) {
         Point rightTopPoint = new Point(startVertex.getX() + width, startVertex.getY());
         Point leftBottomPoint = new Point(startVertex.getX(), startVertex.getY() + height);
         canvas.drawLine(startVertex, rightTopPoint, outlineColor);

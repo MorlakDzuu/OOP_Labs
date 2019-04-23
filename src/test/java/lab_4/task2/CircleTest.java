@@ -30,7 +30,7 @@ public class CircleTest {
 
     @Test
     public void getPerimeter() {
-        assertEquals(0, Double.compare(0, circle.getPerimeter()));
+        assertEquals(1, Double.compare(Math.PI * 25, circle.getPerimeter()));
     }
 
     @Test

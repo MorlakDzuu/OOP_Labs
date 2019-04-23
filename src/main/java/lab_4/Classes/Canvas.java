@@ -13,9 +13,6 @@ public class Canvas implements ICanvas {
         this.graphics = graphics;
     }
 
-    public Canvas() {
-    }
-
     @Override
     public void drawLine(Point from, Point to, int lineColor) {
         graphics.setColor(new Color(lineColor));
@@ -37,12 +34,12 @@ public class Canvas implements ICanvas {
     @Override
     public void drawCircle(Point center, double radius, int lineColor) {
         graphics.setColor(new Color(lineColor));
-        graphics.drawOval((int) center.getX(), (int) center.getY(), (int) radius, (int) radius);
+        graphics.drawOval((int) center.getX(), (int) center.getY(), (int) radius * 2, (int) radius * 2);
     }
 
     @Override
     public void fillCircle(Point center, double radius, int fillColor) {
         graphics.setColor(new Color(fillColor));
-        graphics.fillOval((int) center.getX(), (int) center.getY(), (int) radius, (int) radius);
+        graphics.fillOval((int) center.getX(), (int) center.getY(), (int) radius * 2, (int) radius * 2);
     }
 }

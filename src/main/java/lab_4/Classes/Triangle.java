@@ -1,5 +1,6 @@
 package Classes;
 
+import Interfaces.ICanvas;
 import Interfaces.ICanvasDrawable;
 import Interfaces.ISolidShape;
 
@@ -97,7 +98,7 @@ public class Triangle implements ISolidShape, ICanvasDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(ICanvas canvas) {
         canvas.drawLine(vertex1, vertex2, outlineColor);
         canvas.drawLine(vertex2, vertex3, outlineColor);
         canvas.drawLine(vertex3, vertex1, outlineColor);
