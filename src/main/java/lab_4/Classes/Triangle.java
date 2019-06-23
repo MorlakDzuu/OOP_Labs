@@ -73,14 +73,12 @@ public class Triangle implements ISolidShape, ICanvasDrawable {
 
     @Override
     public double getArea() {
-        double[][] matrix = new double[2][2];
-        matrix[0][0] = vertex1.getX() - vertex3.getX();
-        matrix[0][1] = vertex1.getY() - vertex3.getY();
-        matrix[1][0] = vertex2.getX() - vertex3.getX();
-        matrix[1][1] = vertex2.getY() - vertex3.getY();
-        double area = 0.5*(matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0]);
-        if (area < 0)
-            area = -area;
+        double mat00 = vertex1.getX() - vertex3.getX();
+        double mat01 = vertex1.getY() - vertex3.getY();
+        double mat10 = vertex2.getX() - vertex3.getX();
+        double mat11 = vertex2.getY() - vertex3.getY();
+        double area = 0.5*(mat00*mat11 - mat01*mat10);
+        area = Math.abs(area);
         return area;
     }
 

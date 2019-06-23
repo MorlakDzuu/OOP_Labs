@@ -68,13 +68,14 @@ public class ShapesArray {
     public void drawShapes() {
         if (shapes.size() == 0)
             return;
-        JFrame jFrame = new JFrame("Frame"){
+        JFrame jFrame = new JFrame("Frame") {
             public void paint(Graphics graphics) {
                 super.paint(graphics);
-                Canvas canvas = new Canvas(graphics);
+                Canvas canvas = new Canvas();
                 for (IShape shape: shapes) {
                     ((ICanvasDrawable) shape).draw(canvas);
                 }
+                canvas.drawAll(graphics);
             }
         };
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
